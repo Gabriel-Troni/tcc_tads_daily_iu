@@ -2,6 +2,8 @@ import React from 'react';
 import {ViewProps, ScrollViewProps} from 'react-native';
 
 import * as S from './style';
+import Label from '../Label/Label';
+import theme from '../../theme/theme';
 
 type ScreenContainerProps = {
   children: React.ReactNode;
@@ -13,6 +15,9 @@ type ScreenContainerProps = {
   loading?: boolean;
   LoadingComponent?: React.ReactNode;
   contentContainerStyle?: ScrollViewProps['contentContainerStyle'];
+  currentPage?: string;
+  goBack?: () => void;
+  goBackTo?: string;
 };
 
 const ScreenContainer: React.FC<ScreenContainerProps> = ({
@@ -25,12 +30,24 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
   loading = false,
   LoadingComponent,
   contentContainerStyle,
+  currentPage,
 }) => {
   const Container = safeArea ? S.StyledSafeArea : S.StyledContainer;
 
+  const HeaderWithPageName = (
+    <S.StyledHeader>
+      <Label
+        text={currentPage ?? ''}
+        typography={theme.typography.title.sb3}
+        color={theme.colors.gray_08}
+      />
+    </S.StyledHeader>
+  );
+
   return (
     <Container style={containerStyle}>
-      {headerShown && header}
+      {headerShown &&
+        (header ? header : currentPage ? HeaderWithPageName : <></>)}
       {loading && LoadingComponent}
       {!loading &&
         (scrollable ? (
