@@ -13,6 +13,9 @@ const colors = {
   gray_07: '#6D7785',
   gray_08: '#1A1A1A',
 
+  error: '#FF4D4F',
+  success: '#52C41A',
+
   white: '#FFFFFF',
 };
 

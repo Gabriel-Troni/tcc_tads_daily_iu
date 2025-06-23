@@ -18,7 +18,7 @@ const SliderQuestionnaire: React.FC<SliderQuestionnaireProps> = ({
   step = 1,
   value,
   onValueChange,
-  labels = ['Nada pertinente', 'teste', 'Muito pertinente'],
+  labels = ['Nada pertinente', 'Muito pertinente'],
 }) => {
   return (
     <S.Container>
@@ -38,10 +38,9 @@ const SliderQuestionnaire: React.FC<SliderQuestionnaireProps> = ({
         step={step}
         value={value}
         onValueChange={onValueChange}
-        minimumTrackTintColor={theme.colors.purple_04}
+        minimumTrackTintColor={theme.colors.purple_02}
         maximumTrackTintColor={theme.colors.gray_08}
-        thumbTintColor={theme.colors.purple_04}
-        style={{height: 40}}
+        thumbTintColor={theme.colors.purple_03}
       />
       <S.LabelsRow>
         <Label
@@ -50,16 +49,16 @@ const SliderQuestionnaire: React.FC<SliderQuestionnaireProps> = ({
           text={`${min}`}
         />
         <Label
+          typography={theme.typography.paragraph.b5}
+          color={theme.colors.gray_08}
+          text={`Selecionado: ${value}`}
+        />
+        <Label
           typography={theme.typography.paragraph.r3}
           color={theme.colors.gray_07}
           text={`${max}`}
         />
       </S.LabelsRow>
-      <Label
-        typography={theme.typography.paragraph.r3}
-        color={theme.colors.gray_07}
-        text={`Valor selecionado: ${value}`}
-      />
     </S.Container>
   );
 };

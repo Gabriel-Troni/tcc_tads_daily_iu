@@ -1,24 +1,25 @@
 import React from 'react';
-import Label from '../../../components/Label/Label';
-import theme from '../../../theme/theme';
 import ScreenContainer from '../../../components/ScreenContainer/ScreenContainer';
-import SliderQuestionnaire from '../../../components/SliderQuestionnaire/SliderQuestionnaire';
+import * as S from './styles';
+import StepLabel from './components/StepLabel/StepLabel';
+import QuestionSection from './components/QuestionSection/QuestionSection';
+import ProgressBarStepped from '../../../components/ProgressBarStepped/ProgressBarStepped';
 
 const OnboardingQuestion = () => {
   return (
-    <ScreenContainer>
-      <Label
-        text="Onboarding Question"
-        typography={theme.typography.title.b1}
-        color={theme.colors.gray_08}
-      />
-      <SliderQuestionnaire
-        value={4}
-        step={1}
-        min={0}
-        max={4}
-        onValueChange={(value: number) => console.log(value)}
-      />
+    <ScreenContainer scrollable>
+      <S.Wrapper>
+        <ProgressBarStepped steps={8} currentStep={2} />
+        <StepLabel step={1} totalSteps={3} />
+        <QuestionSection
+          question={{
+            text: 'Qual é a sua idade?',
+            id: 'age',
+            type: 'date',
+          }}
+          onChange={() => {}}
+        />
+      </S.Wrapper>
     </ScreenContainer>
   );
 };

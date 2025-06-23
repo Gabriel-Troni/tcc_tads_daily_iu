@@ -18,7 +18,8 @@ export const StyledSafeArea = styled(SafeAreaView)`
 
 export const StyledContent = styled.View`
   flex-grow: 1;
-  padding: ${moderateScale(16)}px;
+  padding-horizontal: ${horizontalScale(16)}px;
+  padding-vertical: ${verticalScale(32)}px;
 `;
 
 export const StyledScrollContent = styled.ScrollView.attrs({
@@ -26,7 +27,9 @@ export const StyledScrollContent = styled.ScrollView.attrs({
     flexGrow: 1,
     padding: moderateScale(16),
   },
-})``;
+})`
+  padding: ${moderateScale(24)}px;
+`;
 
 export const StyledHeader = styled.View`
   padding-horizontal: ${horizontalScale(16)}px;
