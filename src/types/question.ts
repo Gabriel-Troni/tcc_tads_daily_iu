@@ -6,6 +6,11 @@ export interface ICIQSFAnswers {
   questions: Record<Question['id'], string | number | boolean | string[]>;
 }
 
+export interface QuestionOptions {
+  label: string;
+  value: any;
+}
+
 export interface Question {
   id: string;
   text: string;
@@ -18,7 +23,7 @@ export interface Question {
     | 'date'
     | 'time'
     | 'number';
-  options?: string[];
+  options?: QuestionOptions[];
   min?: number;
   max?: number;
   step?: number;

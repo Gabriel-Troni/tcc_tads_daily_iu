@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {verticalScale, horizontalScale} from '../../../../../utils/scales';
+import {moderateScale, verticalScale} from '../../../../../utils/scales';
 
 export const Wrapper = styled.View`
   display: flex;
@@ -13,5 +13,5 @@ export const ButtonContainer = styled.View`
   width: 100%;
   flex: 1;
   justify-content: flex-end;
-  padding-horizontal: ${horizontalScale(16)}px;
+  padding: ${moderateScale(16)}px;
 `;

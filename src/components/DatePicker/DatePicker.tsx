@@ -8,9 +8,9 @@ import * as S from './styles';
 import 'moment/locale/pt-br';
 import moment from 'moment';
 
-type DateQuestionnaireProps = {
+type DatePickerInputProps = {
   label?: string;
-  value?: Date;
+  value: Date;
   onChange: (date: Date) => void;
   onCancel: () => void;
   minimumDate?: Date;
@@ -21,7 +21,7 @@ type DateQuestionnaireProps = {
   placeholder?: string;
 };
 
-const DateQuestionnaire: React.FC<DateQuestionnaireProps> = ({
+const DatePickerInput: React.FC<DatePickerInputProps> = ({
   label,
   value,
   onChange,
@@ -39,7 +39,7 @@ const DateQuestionnaire: React.FC<DateQuestionnaireProps> = ({
     <S.Container>
       {label && (
         <Label
-          typography={theme.typography.paragraph.r3}
+          typography={theme.typography.paragraph.r4}
           color={theme.colors.gray_08}
           text={label + (required ? ' *' : '')}
         />
@@ -55,15 +55,21 @@ const DateQuestionnaire: React.FC<DateQuestionnaireProps> = ({
           disabled={false}
           value={value ? moment(value).format('DD/mm/YYYY') : ''}
           onFocus={() => setIsOpen(true)}
-          placeholder={placeholder || 'Selecione uma data'}
+          placeholder={placeholder ?? 'Selecione uma data'}
           onPress={() => setIsOpen(true)}
         />
       )}
       <DatePicker
         modal={modal}
         mode={mode}
-        open={isOpen}
-        date={value || new Date()}
+        onDateChange={date => {
+          if (!date) return;
+          if (modal) return;
+          onChange(date);
+          setIsOpen(false);
+        }}
+        open={modal ? isOpen : true}
+        date={value}
         onConfirm={date => {
           onChange(date);
           setIsOpen(false);
@@ -75,9 +81,11 @@ const DateQuestionnaire: React.FC<DateQuestionnaireProps> = ({
         maximumDate={maximumDate}
         minimumDate={minimumDate}
         locale="pt-BR"
+        theme="light"
+        dividerColor={theme.colors.gray_04}
       />
     </S.Container>
   );
 };
 
-export default DateQuestionnaire;
+export default DatePickerInput;

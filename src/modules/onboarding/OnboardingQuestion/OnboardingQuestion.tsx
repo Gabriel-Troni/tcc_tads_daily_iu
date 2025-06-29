@@ -4,21 +4,49 @@ import * as S from './styles';
 import StepLabel from './components/StepLabel/StepLabel';
 import QuestionSection from './components/QuestionSection/QuestionSection';
 import ProgressBarStepped from '../../../components/ProgressBarStepped/ProgressBarStepped';
+import {useOnboardingQuestion} from './useOnboardingQuestion';
+import Toast from '../../../components/Toast/Toast';
 
 const OnboardingQuestion = () => {
+  const {
+    questionInputs,
+    currentQuestionIndex,
+    errorMessage,
+    isToastOpen,
+    onCloseToast,
+    navigateBack,
+  } = useOnboardingQuestion();
+
   return (
-    <ScreenContainer scrollable>
+    <ScreenContainer
+      scrollable
+      headerShown
+      goBack={navigateBack}
+      goBackTo="Voltar"
+      currentPage="Questionário">
+      <Toast
+        type={'ERROR'}
+        message={errorMessage}
+        isOpen={isToastOpen}
+        duration={5000}
+        onClose={onCloseToast}
+      />
       <S.Wrapper>
-        <ProgressBarStepped steps={8} currentStep={2} />
-        <StepLabel step={1} totalSteps={3} />
-        <QuestionSection
-          question={{
-            text: 'Qual é a sua idade?',
-            id: 'age',
-            type: 'date',
-          }}
-          onChange={() => {}}
+        <ProgressBarStepped
+          steps={questionInputs.length}
+          currentStep={currentQuestionIndex + 1}
         />
+        <StepLabel
+          step={currentQuestionIndex + 1}
+          totalSteps={questionInputs.length}
+        />
+        {questionInputs[currentQuestionIndex] && (
+          <QuestionSection
+            question={questionInputs[currentQuestionIndex].question}
+            control={questionInputs[currentQuestionIndex].control}
+            onContinue={questionInputs[currentQuestionIndex].onContinue}
+          />
+        )}
       </S.Wrapper>
     </ScreenContainer>
   );

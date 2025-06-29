@@ -7,69 +7,96 @@ import DatePicker from '../../../../../components/DatePicker/DatePicker';
 import RadioButtonGroup from '../../../../../components/RadioButtonGroup/RadioButtonGroup';
 import SliderQuestionnaire from '../../../../../components/SliderQuestionnaire/SliderQuestionnaire';
 import Button from '../../../../../components/Button/Button';
-
-interface QuestionProps {
+import {Control, Controller} from 'react-hook-form';
+import {ICIQAnswers} from '../../schema/questionnaire';
+export interface QuestionProps {
   question: Question;
-  onChange: (value: string | number | boolean | string[]) => void;
-  selectedValue?: string | number | boolean | string[];
+  control?: Control<any>;
+  onContinue: (field: keyof ICIQAnswers) => void;
 }
 
 const QuestionSection: React.FC<QuestionProps> = ({
   question,
-  onChange,
-  selectedValue,
+  control,
+  onContinue,
 }) => {
-  const {text, type} = question;
+  const validDate = (value?: string | Date) => {
+    if (typeof value === 'string') {
+      const date = new Date(value);
+      return !isNaN(date.getTime()) ? date : null;
+    }
+    if (value instanceof Date && !isNaN(value.getTime())) {
+      return value;
+    }
+    return null;
+  };
+
+  const {id, text, type, options, min, max, step} = question;
 
   return (
     <S.Wrapper>
       <Label
-        typography={theme.typography.title.h3}
+        typography={theme.typography.title.h4}
         color={theme.colors.gray_08}
         text={text}
       />
-      {/*    <DatePicker
-        value={new Date()}
-        onChange={() => {}}
-        label="Selecione uma data"
-        onCancel={() => {}}
-        modal={false}
-        minimumDate={new Date('2020-01-01')}
-        maximumDate={new Date('2026-01-01')}
-        mode="date"
+      <Controller
+        control={control}
+        name={id}
+        render={({field: {onChange: onFieldChange, value}}) => (
+          <>
+            {type === 'date' && (
+              <DatePicker
+                value={validDate(value) ?? new Date()}
+                onChange={(date: Date) => {
+                  onFieldChange(date.toISOString());
+                }}
+                onCancel={() => {}}
+                modal={false}
+                maximumDate={new Date()}
+                mode="date"
+              />
+            )}
+            {type === 'radio' && (
+              <RadioButtonGroup
+                options={options || []}
+                value={value}
+                onChange={selected => {
+                  onFieldChange(selected);
+                }}
+              />
+            )}
+            {type === 'slider' && (
+              <SliderQuestionnaire
+                value={value as number}
+                onValueChange={selected => {
+                  onFieldChange(selected);
+                }}
+                min={min ?? 0}
+                max={max}
+                step={step}
+              />
+            )}
+            {type === 'checkbox' && (
+              <RadioButtonGroup
+                options={options || []}
+                value={value}
+                onChange={selected => {
+                  onFieldChange(selected);
+                }}
+                multiSelect={true}
+              />
+            )}
+          </>
+        )}
       />
-      <RadioButtonGroup options={} value={} onChange={} />
-      <SliderQuestionnaire value={} onValueChange={} /> */}
-      {type === 'date' && (
-        <DatePicker
-          value={new Date()}
-          onChange={(date: Date) => onChange(date.toISOString())}
-          label="Selecione uma data"
-          onCancel={() => {}}
-          modal={true}
-          minimumDate={new Date('2020-01-01')}
-          maximumDate={new Date('2026-01-01')}
-          mode="date"
-        />
-      )}
-      {type === 'radio' && (
-        <RadioButtonGroup
-          options={question.options || []}
-          value={selectedValue as string}
-          onChange={(value: string) => onChange(value)}
-        />
-      )}
-      {type === 'slider' && (
-        <SliderQuestionnaire
-          value={selectedValue as number}
-          onValueChange={(value: number) => onChange(value)}
-          min={question.min || 0}
-          max={question.max}
-          step={question.step}
-        />
-      )}
       <S.ButtonContainer>
-        <Button text={'Continuar'} onPress={() => {}} />
+        <Button
+          text={'Continuar'}
+          onPress={() => {
+            onContinue(id as keyof ICIQAnswers);
+          }}
+        />
       </S.ButtonContainer>
     </S.Wrapper>
   );
