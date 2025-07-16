@@ -5,10 +5,10 @@ import Label from '../../../../../components/Label/Label';
 import theme from '../../../../../theme/theme';
 import DatePicker from '../../../../../components/DatePicker/DatePicker';
 import RadioButtonGroup from '../../../../../components/RadioButtonGroup/RadioButtonGroup';
-import SliderQuestionnaire from '../../../../../components/SliderQuestionnaire/SliderQuestionnaire';
 import Button from '../../../../../components/Button/Button';
 import {Control, Controller} from 'react-hook-form';
 import {ICIQAnswers} from '../../schema/questionnaire';
+import SliderQuestion from '../../../../../components/Slider/SliderInput';
 export interface QuestionProps {
   question: Question;
   control?: Control<any>;
@@ -67,7 +67,7 @@ const QuestionSection: React.FC<QuestionProps> = ({
               />
             )}
             {type === 'slider' && (
-              <SliderQuestionnaire
+              <SliderQuestion
                 value={value as number}
                 onValueChange={selected => {
                   onFieldChange(selected);

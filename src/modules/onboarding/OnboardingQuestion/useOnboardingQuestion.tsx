@@ -20,7 +20,6 @@ const useOnboardingQuestion = () => {
     try {
       const response = await onboardingServices.getQuestions();
       const questionResponse = response;
-
       setQuestionList(questionResponse);
     } catch (error) {
       console.error('Error fetching questions:', error);

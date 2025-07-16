@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import {moderateScale, horizontalScale} from '../../utils/scales';
-import Slider from '@react-native-community/slider';
+import { moderateScale, horizontalScale } from '../../utils/scales';
 
 export const Container = styled.View`
   width: 100%;
@@ -15,11 +14,3 @@ export const LabelsRow = styled.View`
   margin-bottom: ${moderateScale(8)}px;
   padding-horizontal: ${horizontalScale(8)}px;
 `;
-
-export const StyledSlider = styled(Slider)`
-  width: 100%;
-  height: ${moderateScale(40)}px;
-  background-color: ${({theme}) => theme.colors.gray_02};
-`;
-
-
