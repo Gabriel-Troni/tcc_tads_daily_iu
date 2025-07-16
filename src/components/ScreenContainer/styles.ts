@@ -40,10 +40,13 @@ export const StyledHeader = styled.View`
   flex-direction: row;
 `;
 
-export const GoBackContainer = styled.TouchableOpacity`
+export const GoBackContainer = styled.TouchableOpacity.attrs({
+  accessibilityRole: 'button',
+  accessibilityLabel: 'Go back',
+})`
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   gap: ${horizontalScale(8)}px;
-  align-items:center;
+  align-items: center;
   justify-content: center;
 `

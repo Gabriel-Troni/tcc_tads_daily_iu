@@ -78,7 +78,7 @@ const useOnboardingQuestion = () => {
         setIsToastOpen(true);
       }
     },
-    [getValues, trigger, questionList.length],
+    [getValues, trigger, questionList.length, getFieldState],
   );
 
   const onCloseToast = () => {
@@ -94,7 +94,7 @@ const useOnboardingQuestion = () => {
         isValid,
       });
     });
-  }, [getValues]);
+  }, [getValues, handleSubmit, isValid]);
 
   const navigateBack = () => {
     if (currentQuestionIndex === 0) {

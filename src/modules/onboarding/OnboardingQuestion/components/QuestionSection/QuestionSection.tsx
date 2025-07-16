@@ -11,7 +11,7 @@ import {ICIQAnswers} from '../../schema/questionnaire';
 import SliderQuestion from '../../../../../components/Slider/SliderInput';
 export interface QuestionProps {
   question: Question;
-  control?: Control<any>;
+  control?: Control<ICIQAnswers>;
   onContinue: (field: keyof ICIQAnswers) => void;
 }
 
@@ -20,9 +20,17 @@ const QuestionSection: React.FC<QuestionProps> = ({
   control,
   onContinue,
 }) => {
-  const validDate = (value?: string | Date) => {
+  const validDate = (value?: string | number | string[] | Date) => {
     if (typeof value === 'string') {
       const date = new Date(value);
+      return !isNaN(date.getTime()) ? date : null;
+    }
+    if (typeof value === 'number') {
+      const date = new Date(value);
+      return !isNaN(date.getTime()) ? date : null;
+    }
+    if (Array.isArray(value) && value.length > 0) {
+      const date = new Date(value[0]);
       return !isNaN(date.getTime()) ? date : null;
     }
     if (value instanceof Date && !isNaN(value.getTime())) {
@@ -42,7 +50,7 @@ const QuestionSection: React.FC<QuestionProps> = ({
       />
       <Controller
         control={control}
-        name={id}
+        name={id as keyof ICIQAnswers}
         render={({field: {onChange: onFieldChange, value}}) => (
           <>
             {type === 'date' && (

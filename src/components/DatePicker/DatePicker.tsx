@@ -7,6 +7,7 @@ import Input from '../Input/Input';
 import * as S from './styles';
 import 'moment/locale/pt-br';
 import moment from 'moment';
+import {TouchableOpacity} from 'react-native';
 
 type DatePickerInputProps = {
   label?: string;
@@ -46,18 +47,19 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
       )}
 
       {modal && (
-        <Input
-          type="date"
-          onChange={inputValue => {
-            const date = inputValue ? new Date(inputValue) : new Date();
-            onChange(date);
-          }}
-          disabled={false}
-          value={value ? moment(value).format('DD/mm/YYYY') : ''}
-          onFocus={() => setIsOpen(true)}
-          placeholder={placeholder ?? 'Selecione uma data'}
-          onPress={() => setIsOpen(true)}
-        />
+        <TouchableOpacity onPress={() => setIsOpen(true)}>
+          <Input
+            type="date"
+            onChange={inputValue => {
+              const date = inputValue ? new Date(inputValue) : new Date();
+              onChange(date);
+            }}
+            disabled={false}
+            value={value ? moment(value).format('DD/mm/YYYY') : ''}
+            onFocus={() => setIsOpen(true)}
+            placeholder={placeholder ?? 'Selecione uma data'}
+          />
+        </TouchableOpacity>
       )}
       <DatePicker
         modal={modal}
