@@ -1,0 +1,30 @@
+{
+  "name": "tcc-tads-gateway",
+  "version": "1.0.0",
+  "description": "API Gateway responsavel por controlar o acesso a recursos do backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raulbana/tcc-tads-gateway.git"
+  },
+  "keywords": [
+    "gateway",
+    "express",
+    "npm",
+    "API"
+  ],
+  "author": "TADS UFPR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raulbana/tcc-tads-gateway/issues"
+  },
+  "homepage": "https://github.com/raulbana/tcc-tads-gateway#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
