@@ -1,0 +1,131 @@
+{
+    "openapi":"3.1.1",
+    "info": {
+      "title":"DailyIU API",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"https://api.server.test/v1"}
+    ],
+    "paths": {
+        "/v1/admin/content": {
+            "get": {
+                "summary": "Retorna uma lista paginada de publicações de conteúdo educativo ordenadas por data de criação (mais recentes primeiro).",
+                "description": "Retorna uma lista de publicações com parâmetros opcionais de paginação. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de publicações de conteúdo educativo retornadas.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 20,
+                            "minimum": 10,
+                            "maximum": 60
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Número de publicações a serem ignoradas.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 10
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Texto a ser procurado nos títulos das publicações. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "categoryIds",
+                        "in": "query",
+                        "description": "Ids das categorias de publicação a serem procuradas.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            },
+                            "example": [1, 2, 3]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de publicações retornada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "summary": {
+                                                "type": "string",
+                                                "description": "Primeiros 50 caracteres da publicação."
+                                            },
+                                            "createdAt": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "description": "dd/MM/yyyy hh:mm:ss",
+                                                "example": "23/08/2025 18:33:00"
+                                            },
+                                            "approved": {
+                                                "type": "boolean"
+                                            },
+                                            "coverUrl": {
+                                                "type": "string",
+                                                "example": "https://cdn.exemplo.com/capas/123.webp"
+                                            },
+                                            "categories": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    { "bearerAuth": [] }
+                ]
+            }    
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+  }
+}
