@@ -100,7 +100,7 @@
                             "comments": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "../../../components/comment.json"
+                                    "$ref": "../../components/comment.json"
                                 }
                             }
                         }
