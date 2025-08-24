@@ -1,101 +1,100 @@
 {
-    "get": {
-        "summary": "Retorna uma lista de publicações.",
-        "tags": ["HU001 - Pesquisar Conteúdo"],
-        "description": "Retorna uma lista de publicações com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
-        "parameters": [
-            {
-                "name": "limit",
-                "in": "query",
-                "description": "Quantidade de publicações de conteúdo educativo retornadas.",
-                "required": false,
-                "schema": {
-                    "type": "integer",
-                    "default": 20,
-                    "minimum": 10,
-                    "maximum": 60
-                }
-            },
-            {
-                "name": "offset",
-                "in": "query",
-                "description": "Número de publicações a serem ignoradas.",
-                "required": false,
-                "schema": {
-                    "type": "integer",
-                    "default": 0,
-                    "minimum": 0
-                }
-            },
-            {
-                "name": "title",
-                "in": "query",
-                "description": "Texto a ser procurado nos títulos das publicações. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
-                "required": false,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            {
-                "name": "categoryIds",
-                "in": "query",
-                "description": "Ids das categorias de publicação a serem procuradas.",
-                "required": false,
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    },
-                    "example": [1, 2, 3]
-                },
-                "style": "form",
-                "explode": true
+"get": {
+    "summary": "Retorna uma lista de publicações.",
+    "tags": ["HU001 - Pesquisar Conteúdo"],
+    "description": "Retorna uma lista de publicações com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
+    "parameters": [
+        {
+            "name": "limit",
+            "in": "query",
+            "description": "Quantidade de publicações de conteúdo educativo retornadas.",
+            "required": false,
+            "schema": {
+                "type": "integer",
+                "default": 20,
+                "minimum": 10,
+                "maximum": 60
             }
-        ],
-        "responses": {
-            "200": {
-                "description": "Lista de publicações retornada com sucesso.",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "integer"
-                                    },
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "summary": {
-                                        "type": "string",
-                                        "description": "Primeiros 50 caracteres da publicação."
-                                    },
-                                    "createdAt": {
-                                        "type": "string",
-                                        "format": "date-time",
-                                        "description": "dd/MM/yyyy hh:mm:ss",
-                                        "example": "23/08/2025 18:33:00"
-                                    },
-                                    "approved": {
-                                        "type": "boolean"
-                                    },
-                                    "coverUrl": {
-                                        "type": "string",
-                                        "example": "https://cdn.exemplo.com/capas/123.webp"
-                                    },
-                                    "categories": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                }
+        },
+        {
+            "name": "offset",
+            "in": "query",
+            "description": "Número de publicações a serem ignoradas.",
+            "required": false,
+            "schema": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 0
+            }
+        },
+        {
+            "name": "title",
+            "in": "query",
+            "description": "Texto a ser procurado nos títulos das publicações. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
+            "required": false,
+            "schema": {
+                "type": "string"
+            }
+        },
+        {
+            "name": "categoryIds",
+            "in": "query",
+            "description": "Ids das categorias de publicação a serem procuradas.",
+            "required": false,
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                },
+                "example": [1, 2, 3]
+            },
+            "style": "form",
+            "explode": true
+        }
+    ],
+    "responses": {
+        "200": {
+            "description": "Lista de publicações retornada com sucesso.",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "title": {
+                                    "type": "string"
+                                },
+                                "summary": {
+                                    "type": "string",
+                                    "description": "Primeiros 50 caracteres da publicação."
+                                },
+                                "createdAt": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "dd/MM/yyyy hh:mm:ss",
+                                    "example": "23/08/2025 18:33:00"
+                                },
+                                "approved": {
+                                    "type": "boolean"
+                                },
+                                "coverUrl": {
+                                    "type": "string",
+                                    "example": "https://cdn.exemplo.com/capas/123.webp"
+                                },
+                                "categories": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
                                             }
                                         }
                                     }
@@ -104,22 +103,23 @@
                         }
                     }
                 }
-            },
-            "400": {
-                "description": "Parâmetros de requisição inválidos."
-            },
-            "401": {
-                "description": "Token de autenticação ausente ou inválido."
-            },
-            "403": {
-                "description": "Usuário não tem permissão para acessar este recurso."
-            },
-            "500": {
-                "description": "Erro interno do servidor."
             }
         },
-        "security": [
-            { "bearerAuth": [] }
-        ]
-    }
+        "400": {
+            "description": "Parâmetros de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para acessar este recurso."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    },
+    "security": [
+        { "bearerAuth": [] }
+    ]
+}
 }

@@ -1,102 +1,131 @@
 {
-    "get": {
-        "summary": "Retorna uma publicação de conteúdo educativo.",
-        "tags": ["HU001 - Pesquisar Conteúdo"],
-        "description": "Retorna a publicação do id informado com todos os seus dados.",
-        "parameters": [
-            {
-                "name": "id",
-                "in": "path",
-                "description": "Id da publicação.",
-                "required": true,
-                "schema": {
-                    "type": "integer",
-                    "minimum": 1
-                }
+"get": {
+    "summary": "Retorna uma publicação de conteúdo educativo.",
+    "tags": ["HU001 - Pesquisar Conteúdo"],
+    "description": "Retorna a publicação do id informado com comentários paginados.",
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação.",
+            "required": true,
+            "schema": {
+                "type": "integer",
+                "minimum": 1
             }
-        ],
-        "responses": {
-            "200": {
-                "description": "Publicação retornada com sucesso.",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "title": {
-                                    "type": "string"
-                                },
-                                "text": {
-                                    "type": "string",
-                                    "description": "Texto da publicação."
-                                },
-                                "createdAt": {
-                                    "type": "string",
-                                    "format": "date-time",
-                                    "description": "dd/MM/yyyy hh:mm:ss",
-                                    "example": "23/08/2025 18:33:00"
-                                },
-                                "approved": {
-                                    "type": "boolean"
-                                },
-                                "coverUrl": {
+        },
+        {
+            "name": "limit",
+            "in": "query",
+            "description": "Quantidade de comentários retornados. Ordenados por data de criação decrescente.",
+            "required": false,
+            "schema": {
+                "type": "integer",
+                "default": 50,
+                "minimum": 0,
+                "maximum": 50
+            }
+        },
+        {
+            "name": "offset",
+            "in": "query",
+            "description": "Número de comentários a serem ignorados.",
+            "required": false,
+            "schema": {
+                "type": "integer",
+                "default": 0,
+                "minimum": 0
+            }
+        }
+    ],
+    "responses": {
+        "200": {
+            "description": "Publicação retornada com sucesso.",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "text": {
+                                "type": "string",
+                                "description": "Texto da publicação."
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "dd/MM/yyyy hh:mm:ss",
+                                "example": "23/08/2025 18:33:00"
+                            },
+                            "approved": {
+                                "type": "boolean"
+                            },
+                            "coverUrl": {
+                                "type": "string",
+                                "example": "https://cdn.exemplo.com/capas/123.webp"
+                            },
+                            "images": {
+                                "type": "array",
+                                "items": {
                                     "type": "string",
                                     "example": "https://cdn.exemplo.com/capas/123.webp"
-                                },
-                                "images": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string",
-                                        "example": "https://cdn.exemplo.com/capas/123.webp"
-                                    }
-                                },
-                                "videos": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string",
-                                        "example": "https://cdn.exemplo.com/capas/123.webm"
-                                    }
-                                },
-                                "categories": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            }
+                                }
+                            },
+                            "videos": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "https://cdn.exemplo.com/capas/123.webm"
+                                }
+                            },
+                            "categories": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
                                         }
                                     }
+                                }
+                            },
+                            "comments": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "../../../components/comment.json"
                                 }
                             }
                         }
                     }
                 }
-            },
-            "400": {
-                "description": "Parâmetros de requisição inválidos."
-            },
-            "401": {
-                "description": "Token de autenticação ausente ou inválido."
-            },
-            "403": {
-                "description": "Usuário não tem permissão para acessar este recurso."
-            },
-            "404": {
-                "description": "Publicação não encontrada."
-            },
-            "500": {
-                "description": "Erro interno do servidor."
             }
-        },
-        "security": [
-            { "bearerAuth": [] }
-        ]
-    }    
+        }
+    },
+    "400": {
+        "description": "Parâmetros de requisição inválidos."
+    },
+    "401": {
+        "description": "Token de autenticação ausente ou inválido."
+    },
+    "403": {
+        "description": "Usuário não tem permissão para acessar este recurso."
+    },
+    "404": {
+        "description": "Publicação não encontrada."
+    },
+    "500": {
+        "description": "Erro interno do servidor."
+    }
+},
+"security": [
+    { "bearerAuth": [] }
+]
 }
