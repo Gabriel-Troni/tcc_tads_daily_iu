@@ -126,5 +126,125 @@
     "500": {
         "description": "Erro interno do servidor."
     }
+},
+"put": {
+    "summary": "Atualiza uma publicação de conteúdo educativo existente.",
+    "tags": ["HU003 - Manter Conteúdo Educativo"],
+    "description": "Atualiza os dados de uma publicação já cadastrada. As novas imagens e vídeos devem ser enviadas no endpoint de upload.",
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação a ser atualizada.",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "requestBody": {
+        "required": true,
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "description": "Título da publicação."
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "Texto da publicação."
+                        },
+                        "categoryIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Lista de IDs das categorias associadas à publicação."
+                        },
+                        "deletedImages": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Links das imagens excluídas."
+                        },
+                        "deletedVideos": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Links dos vídeos excluídos."
+                        }
+                    },
+                    "required": ["title", "summary", "content", "categoryIds"]
+                }
+            }
+        }
+    },
+    "responses": {
+        "204": {
+            "description": "Publicação atualizada com sucesso."
+        },
+        "400": {
+            "description": "Dados de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para atualizar a publicação."
+        },
+        "404": {
+            "description": "Publicação não encontrada."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
+},
+"delete": {
+    "summary": "Remove uma publicação de conteúdo educativo existente.",
+    "tags": ["HU003 - Manter Conteúdo Educativo"],
+    "description": "Remove permanentemente a publicação identificada pelo id informado.",
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação a ser removida.",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "responses": {
+        "204": {
+            "description": "Publicação removida com sucesso."
+        },
+        "400": {
+            "description": "Parâmetros de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para remover a publicação."
+        },
+        "404": {
+            "description": "Publicação não encontrada."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
 }
 }

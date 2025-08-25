@@ -120,5 +120,72 @@
             "description": "Erro interno do servidor."
         }
     }
+},
+"post": {
+    "summary": "Cria uma nova publicação de conteúdo educativo.",
+    "description": "Cria uma publicação de conteúdo educativo no sistema. O upload de mídias deve ser feito em outro endpoint.",
+    "tags": ["HU003 - Manter Conteúdo Educativo"],
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "requestBody": {
+        "required": true,
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "description": "Título da publicação.",
+                            "required": true
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "Conteúdo completo da publicação.",
+                            "required": true
+                        },
+                        "categoryIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Lista de IDs das categorias associadas à publicação.",
+                            "required": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "responses": {
+        "201": {
+            "description": "Publicação criada com sucesso.",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "400": {
+            "description": "Dados de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para criar publicação."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
 }
 }

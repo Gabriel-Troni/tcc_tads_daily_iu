@@ -124,12 +124,12 @@
                             "type": "string",
                             "description": "Descrição do exercício."
                         },
-                        "tags": {
+                        "categoryIds": {
                             "type": "array",
                             "items": {
                                 "type": "string"
                             },
-                            "description": "Lista de tags associadas ao exercício."
+                            "description": "Lista de ids das categorias associadas ao exercício."
                         },
                         "deletedImages": {
                             "type": "array",

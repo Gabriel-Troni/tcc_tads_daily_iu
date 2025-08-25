@@ -1,0 +1,74 @@
+{
+  "put": {
+    "summary": "Faz upload de mídias para uma publicação de conteúdo educativo.",
+    "description": "Recebe a imagem de capa, um vetor de imagens e outro de vídeos para uma publicação existente. O ID da publicação deve ser informado no path.",
+    "tags": ["HU003 - Manter Conteúdo Educativo"],
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID da publicação criada",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+                "coverImage": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Imagem de capa da publicação."
+                },
+                "images": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "format": "binary"
+                },
+                "description": "Arquivos de imagem para upload."
+                },
+                "videos": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "format": "binary"
+                },
+                "description": "Arquivos de vídeo para upload."
+                }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": {
+        "description": "Mídias adicionadas com sucesso."
+      },
+      "400": {
+        "description": "Dados de requisição inválidos."
+      },
+      "401": {
+        "description": "Token de autenticação ausente ou inválido."
+      },
+      "403": {
+        "description": "Usuário não tem permissão para enviar mídias."
+      },
+      "404": {
+        "description": "Publicação não encontrada."
+      },
+      "500": {
+        "description": "Erro interno do servidor."
+      }
+    }
+  }
+}

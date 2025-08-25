@@ -139,12 +139,12 @@
                         "description": "Descrição do exercício.",
                         "required": true
                     },
-                    "tags": {
+                    "categories": {
                         "type": "array",
                         "items": {
                             "type": "string"
                         },
-                        "description": "Lista de IDs das tags associadas ao exercício.",
+                        "description": "Lista de ids das categorias associadas ao exercício.",
                         "required": true
                     }
                 }
