@@ -8,10 +8,11 @@
       {"url":"https://api.server.test/v1"}
     ],
     "paths": {
-        "/v1/admin/content": { "$ref": "./paths/HU001/getEducationalContents.json" },
-        "/v1/admin/content/{id}": { "$ref": "./paths/HU001/getEducationalContentById.json" },
-        "/v1/admin/exercise": { "$ref": "./paths/HU001/getExercises.json" },
-        "/v1/admin/exercise/{id}": { "$ref": "./paths/HU001/getExerciseById.json" }
+        "/v1/admin/content": { "$ref": "./paths/educationalContent/contents.json" },
+        "/v1/admin/content/{id}": { "$ref": "./paths/educationalContent/contentById.json" },
+        "/v1/admin/exercise": { "$ref": "./paths/exercises/exercises.json" },
+        "/v1/admin/exercise/{id}": { "$ref": "./paths/exercises/exerciseById.json" },
+        "/v1/admin/upload": { "$ref": "./paths/exercises/media.json" }
     },
     "components": {
         "schemas": {

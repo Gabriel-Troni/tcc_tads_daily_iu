@@ -1,0 +1,214 @@
+{
+"get": {
+    "summary": "Retorna um exercício.",
+    "tags": ["HU001 - Pesquisar Conteúdo"],
+    "description": "Retorna o exercício do id informado com todos os seus dados.",
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id do exercício.",
+            "required": true,
+            "schema": {
+                "type": "string",
+                "minimum": 1
+            }
+        }
+    ],
+    "responses": {
+        "200": {
+            "description": "Exercício retornado com sucesso.",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "Descrição do exercício"
+                            },
+                            "duration": {
+                                "type": "string",
+                                "format": "time",
+                                "example": "1:30min"
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "dd/MM/yyyy hh:mm:ss",
+                                "example": "23/08/2025 18:33:00"
+                            },
+                            "imageUrl": {
+                                "type": "string",
+                                "example": "https://cdn.exemplo.com/capas/123.webp"
+                            },
+                            "videoUrl": {
+                                "type": "string",
+                                "example": "https://cdn.exemplo.com/capas/123.webm"
+                            },
+                            "categories": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "400": {
+            "description": "Parâmetros de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para acessar este recurso."
+        },
+        "404": {
+            "description": "Exercício não encontrado."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
+},
+"put": {
+    "summary": "Atualiza um exercício existente.",
+    "tags": ["HU002 - Manter Exercícios"],
+    "description": "Atualiza os dados de um exercício já cadastrado. As novas imagens e vídeos devem ser enviadas no endpoint de upload.",
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id do exercício a ser atualizado.",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "requestBody": {
+        "required": true,
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Nome do exercício."
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Descrição do exercício."
+                        },
+                        "tags": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Lista de tags associadas ao exercício."
+                        },
+                        "deletedImages": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Links das imagens excluídas."
+                        },
+                        "deletedVideos": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Links dos vídeos excluídos."
+                        }
+                    },
+                    "required": ["name", "description", "tags"]
+                }
+            }
+        }
+    },
+    "responses": {
+        "204": {
+            "description": "Exercício atualizado com sucesso."
+        },
+        "400": {
+            "description": "Dados de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para atualizar o exercício."
+        },
+        "404": {
+            "description": "Exercício não encontrado."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
+},
+"delete": {
+    "summary": "Remove um exercício existente.",
+    "tags": ["HU002 - Manter Exercícios"],
+    "description": "Remove permanentemente o exercício identificado pelo id informado.",
+    "security": [
+        { "bearerAuth": [] }
+    ],
+    "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "Id do exercício a ser removido.",
+            "required": true,
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "responses": {
+        "204": {
+            "description": "Exercício removido com sucesso."
+        },
+        "400": {
+            "description": "Parâmetros de requisição inválidos."
+        },
+        "401": {
+            "description": "Token de autenticação ausente ou inválido."
+        },
+        "403": {
+            "description": "Usuário não tem permissão para remover o exercício."
+        },
+        "404": {
+            "description": "Exercício não encontrado."
+        },
+        "500": {
+            "description": "Erro interno do servidor."
+        }
+    }
+}
+}

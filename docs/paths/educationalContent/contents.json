@@ -1,14 +1,16 @@
-
 {
 "get": {
-    "summary": "Retorna uma lista de exercícios.",
+    "summary": "Retorna uma lista de publicações.",
     "tags": ["HU001 - Pesquisar Conteúdo"],
-    "description": "Retorna uma lista de exercícios com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
+    "description": "Retorna uma lista de publicações com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
+    "security": [
+      { "bearerAuth": [] }
+    ],
     "parameters": [
         {
             "name": "limit",
             "in": "query",
-            "description": "Quantidade de exercícios retornados.",
+            "description": "Quantidade de publicações de conteúdo educativo retornadas.",
             "required": false,
             "schema": {
                 "type": "integer",
@@ -20,7 +22,7 @@
         {
             "name": "offset",
             "in": "query",
-            "description": "Número de exercícios a serem ignorados.",
+            "description": "Número de publicações a serem ignoradas.",
             "required": false,
             "schema": {
                 "type": "integer",
@@ -31,7 +33,7 @@
         {
             "name": "title",
             "in": "query",
-            "description": "Texto a ser procurado nos títulos dos exercícios. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
+            "description": "Texto a ser procurado nos títulos das publicações. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
             "required": false,
             "schema": {
                 "type": "string"
@@ -40,14 +42,13 @@
         {
             "name": "categoryIds",
             "in": "query",
-            "description": "Ids das categorias de exercícios a serem procurados.",
+            "description": "Ids das categorias de publicação a serem procuradas.",
             "required": false,
             "schema": {
                 "type": "array",
                 "items": {
-                    "type": "integer"
-                },
-                "example": [1, 2, 3]
+                    "type": "string"
+                }
             },
             "style": "form",
             "explode": true
@@ -55,7 +56,7 @@
     ],
     "responses": {
         "200": {
-            "description": "Lista de exercícios retornada com sucesso.",
+            "description": "Lista de publicações retornada com sucesso.",
             "content": {
                 "application/json": {
                     "schema": {
@@ -64,15 +65,14 @@
                             "type": "object",
                             "properties": {
                                 "id": {
-                                    "type": "integer"
+                                    "type": "string"
                                 },
                                 "title": {
                                     "type": "string"
                                 },
-                                "duration": {
+                                "summary": {
                                     "type": "string",
-                                    "format": "time",
-                                    "example": "1:30min"
+                                    "description": "Primeiros 50 caracteres da publicação."
                                 },
                                 "createdAt": {
                                     "type": "string",
@@ -80,13 +80,20 @@
                                     "description": "dd/MM/yyyy hh:mm:ss",
                                     "example": "23/08/2025 18:33:00"
                                 },
+                                "approved": {
+                                    "type": "boolean"
+                                },
+                                "coverUrl": {
+                                    "type": "string",
+                                    "example": "https://cdn.exemplo.com/capas/123.webp"
+                                },
                                 "categories": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
                                         "properties": {
                                             "id": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "name": {
                                                 "type": "string"
@@ -112,9 +119,6 @@
         "500": {
             "description": "Erro interno do servidor."
         }
-    },
-    "security": [
-        { "bearerAuth": [] }
-    ]
+    }
 }
 }

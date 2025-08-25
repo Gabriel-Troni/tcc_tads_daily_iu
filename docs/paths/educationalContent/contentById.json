@@ -3,6 +3,9 @@
     "summary": "Retorna uma publicação de conteúdo educativo.",
     "tags": ["HU001 - Pesquisar Conteúdo"],
     "description": "Retorna a publicação do id informado com comentários paginados.",
+    "security": [
+      { "bearerAuth": [] }
+    ],
     "parameters": [
         {
             "name": "id",
@@ -10,8 +13,7 @@
             "description": "Id da publicação.",
             "required": true,
             "schema": {
-                "type": "integer",
-                "minimum": 1
+                "type": "string"
             }
         },
         {
@@ -47,7 +49,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "type": "integer"
+                                "type": "string"
                             },
                             "title": {
                                 "type": "string"
@@ -89,7 +91,7 @@
                                     "type": "object",
                                     "properties": {
                                         "id": {
-                                            "type": "integer"
+                                            "type": "string"
                                         },
                                         "name": {
                                             "type": "string"
@@ -124,8 +126,5 @@
     "500": {
         "description": "Erro interno do servidor."
     }
-},
-"security": [
-    { "bearerAuth": [] }
-]
+}
 }
