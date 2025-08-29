@@ -1,8 +1,8 @@
 {
 "get": {
-    "summary": "Retorna uma lista de publicações.",
-    "tags": ["HU001 - Pesquisar Conteúdo"],
-    "description": "Retorna uma lista de publicações com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
+    "summary": "Retorna uma lista de exercícios.",
+    "tags": ["HU001"],
+    "description": "Retorna uma lista de exercícios com parâmetros opcionais de paginação e ordenação por data de criação decrescente. Retorna somente os dados essenciais para apresentar na tela de pesquisar conteúdo (admin).",
     "security": [
       { "bearerAuth": [] }
     ],
@@ -10,7 +10,7 @@
         {
             "name": "limit",
             "in": "query",
-            "description": "Quantidade de publicações de conteúdo educativo retornadas.",
+            "description": "Quantidade de exercícios retornados.",
             "required": false,
             "schema": {
                 "type": "integer",
@@ -22,7 +22,7 @@
         {
             "name": "offset",
             "in": "query",
-            "description": "Número de publicações a serem ignoradas.",
+            "description": "Número de exercícios a serem ignorados.",
             "required": false,
             "schema": {
                 "type": "integer",
@@ -33,7 +33,7 @@
         {
             "name": "title",
             "in": "query",
-            "description": "Texto a ser procurado nos títulos das publicações. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
+            "description": "Texto a ser procurado nos títulos dos exercícios. Não é necessário informar o título completo ou exato, pois a busca é por proximidade.",
             "required": false,
             "schema": {
                 "type": "string"
@@ -42,7 +42,7 @@
         {
             "name": "categoryIds",
             "in": "query",
-            "description": "Ids das categorias de publicação a serem procuradas.",
+            "description": "Ids das categorias de exercícios a serem procurados.",
             "required": false,
             "schema": {
                 "type": "array",
@@ -56,7 +56,7 @@
     ],
     "responses": {
         "200": {
-            "description": "Lista de publicações retornada com sucesso.",
+            "description": "Lista de exercícios retornada com sucesso.",
             "content": {
                 "application/json": {
                     "schema": {
@@ -70,22 +70,16 @@
                                 "title": {
                                     "type": "string"
                                 },
-                                "summary": {
+                                "duration": {
                                     "type": "string",
-                                    "description": "Primeiros 50 caracteres da publicação."
+                                    "format": "time",
+                                    "example": "1:30min"
                                 },
                                 "createdAt": {
                                     "type": "string",
                                     "format": "date-time",
                                     "description": "dd/MM/yyyy hh:mm:ss",
                                     "example": "23/08/2025 18:33:00"
-                                },
-                                "approved": {
-                                    "type": "boolean"
-                                },
-                                "coverUrl": {
-                                    "type": "string",
-                                    "example": "https://cdn.exemplo.com/capas/123.webp"
                                 },
                                 "categories": {
                                     "type": "array",
@@ -122,45 +116,45 @@
     }
 },
 "post": {
-    "summary": "Cria uma nova publicação de conteúdo educativo.",
-    "description": "Cria uma publicação de conteúdo educativo no sistema. O upload de mídias deve ser feito em outro endpoint.",
-    "tags": ["HU003 - Manter Conteúdo Educativo"],
+    "summary": "Cria um novo exercício.",
+    "description": "Cria um exercício no sistema. O upload de mídias deve ser feito no outro endpoint.",
+    "tags": ["HU002"],
     "security": [
         { "bearerAuth": [] }
     ],
     "requestBody": {
         "required": true,
         "content": {
-            "application/json": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "title": {
-                            "type": "string",
-                            "description": "Título da publicação.",
-                            "required": true
+        "application/json": {
+            "schema": {
+            "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Título do exercício.",
+                        "required": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Descrição do exercício.",
+                        "required": true
+                    },
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
                         },
-                        "text": {
-                            "type": "string",
-                            "description": "Conteúdo completo da publicação.",
-                            "required": true
-                        },
-                        "categoryIds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "description": "Lista de IDs das categorias associadas à publicação.",
-                            "required": true
-                        }
+                        "description": "Lista de ids das categorias associadas ao exercício.",
+                        "required": true
                     }
                 }
             }
         }
+        }
     },
     "responses": {
         "201": {
-            "description": "Publicação criada com sucesso.",
+            "description": "Exercício criado com sucesso.",
             "content": {
                 "application/json": {
                     "schema": {
@@ -181,7 +175,7 @@
             "description": "Token de autenticação ausente ou inválido."
         },
         "403": {
-            "description": "Usuário não tem permissão para criar publicação."
+            "description": "Usuário não tem permissão para criar exercício."
         },
         "500": {
             "description": "Erro interno do servidor."

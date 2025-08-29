@@ -1,7 +1,7 @@
 {
 "get": {
     "summary": "Retorna um exercício.",
-    "tags": ["HU001 - Pesquisar Conteúdo"],
+    "tags": ["HU001"],
     "description": "Retorna o exercício do id informado com todos os seus dados.",
     "security": [
       { "bearerAuth": [] }
@@ -93,7 +93,7 @@
 },
 "put": {
     "summary": "Atualiza um exercício existente.",
-    "tags": ["HU002 - Manter Exercícios"],
+    "tags": ["HU002"],
     "description": "Atualiza os dados de um exercício já cadastrado. As novas imagens e vídeos devem ser enviadas no endpoint de upload.",
     "security": [
         { "bearerAuth": [] }
@@ -174,7 +174,7 @@
 },
 "delete": {
     "summary": "Remove um exercício existente.",
-    "tags": ["HU002 - Manter Exercícios"],
+    "tags": ["HU002"],
     "description": "Remove permanentemente o exercício identificado pelo id informado.",
     "security": [
         { "bearerAuth": [] }

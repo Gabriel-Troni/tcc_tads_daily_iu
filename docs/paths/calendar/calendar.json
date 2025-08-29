@@ -1,0 +1,52 @@
+{
+    "get": {
+        "summary": "Obter eventos do calendário",
+        "tags": [
+            "HU007"
+        ],
+        "description": "Retorna uma lista de registros de eventos do calendário (Micções, histórico de treino). Caso não receba os parâmetros de filtro, retorna apenas registros do **mês atual**.",
+        "security": [{
+            "bearerAuth": []
+        }],
+        "parameters": [
+            {
+                "name": "from",
+                "in": "query",
+                "required": false,
+                "description": "Data de início para filtrar eventos",
+                "schema": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            {
+                "name": "to",
+                "in": "query",
+                "required": false,
+                "description": "Data de término para filtrar eventos",
+                "schema": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Lista de eventos do calendário",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../components/schemas/calendarEvent.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Erro na validação dos dados"
+            },
+            "500": {
+                "description": "Erro interno do servidor"
+            }
+        }
+    }
+}

@@ -1,21 +1,10 @@
 {
-  "put": {
-    "summary": "Faz upload de mídias para um exercício.",
-    "description": "Recebe um vetor de imagens e outro de vídeos para um exercício existente. O ID do exercício deve ser informado no path.",
-    "tags": ["HU002 - Manter Exercícios"],
+  "post": {
+    "summary": "Faz upload de mídias para a plataforma.",
+    "description": "Recebe um vetor de arquivos para upload. Retorna um vetor de arquivos com suas URLs.",
+    "tags": ["HU002", "HU003"],
     "security": [
       { "bearerAuth": [] }
-    ],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "ID do exercício criado",
-        "schema": {
-          "type": "string"
-        }
-      }
     ],
     "requestBody": {
       "required": true,
@@ -24,23 +13,14 @@
           "schema": {
             "type": "object",
             "properties": {
-              "images": {
+              "files": {
                 "type": "array",
                 "items": {
                   "type": "string",
                   "format": "binary"
                 },
                 "required": true,
-                "description": "Arquivos de imagem para upload."
-              },
-              "videos": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "format": "binary"
-                },
-                "required": true,
-                "description": "Arquivos de vídeo para upload."
+                "description": "Arquivos para upload."
               }
             }
           }
@@ -48,8 +28,23 @@
       }
     },
     "responses": {
-      "204": {
-        "description": "Mídias adicionadas com sucesso."
+      "200": {
+        "description": "Mídias adicionadas com sucesso.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "../../components/schemas/file.json"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "400": {
         "description": "Dados de requisição inválidos."

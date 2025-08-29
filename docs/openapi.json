@@ -1,23 +1,122 @@
 {
-    "openapi":"3.1.1",
+    "openapi": "3.1.1",
     "info": {
-      "title":"DailyIU API",
-      "version":"1.0"
+        "title": "DailyIU API",
+        "version": "1.0"
     },
     "servers": [
-      {"url":"https://api.server.test/v1"}
+        {
+            "url": "https://api.server.test/v1"
+        }
+    ],
+    "tags": [
+        {
+            "name": "HU001",
+            "description": "**Pesquisar Conteúdo**"
+        },
+        {
+            "name": "HU002",
+            "description": "**Manter Exercícios**"
+        },
+        {
+            "name": "HU003",
+            "description": "**Manter Conteúdo Educativo**"
+        },
+        {
+            "name": "HU004",
+            "description": "**Realizar Treino**"
+        },
+        {
+            "name": "HU005",
+            "description": "**Avaliar Treino**"
+        },
+        {
+            "name": "HU006",
+            "description": "**Registrar Diário Miccional**"
+        },
+        {
+            "name": "HU007",
+            "description": "**Consultar Histórico**"
+        },
+        {
+            "name": "HU008",
+            "description": "**Gerar Relatório (Usuário)**"
+        },
+        {
+            "name": "HU009",
+            "description": "**Gerenciar Preferências de Acessibilidade**"
+        },
+        {
+            "name": "HU010",
+            "description": "**Gerenciar Preferências de Notificação**"
+        },
+        {
+            "name": "HU011",
+            "description": "**Responder Questionário Inicial**"
+        },
+        {
+            "name": "HU012",
+            "description": "**Acessar Conteúdo Educativo**"
+        },
+        {
+            "name": "HU013",
+            "description": "**Acessar Comunidade**"
+        },
+        {
+            "name": "HU014",
+            "description": "**Acessar Fale Conosco**"
+        }
     ],
     "paths": {
-        "/v1/admin/content": { "$ref": "./paths/educationalContent/contents.json" },
-        "/v1/admin/content/{id}": { "$ref": "./paths/educationalContent/contentById.json" },
-        "/v1/admin/content/upload": { "$ref": "./paths/educationalContent/contentMedia.json" },
-        "/v1/admin/exercise": { "$ref": "./paths/exercises/exercises.json" },
-        "/v1/admin/exercise/{id}": { "$ref": "./paths/exercises/exerciseById.json" },
-        "/v1/admin/exercise/upload": { "$ref": "./paths/exercises/exerciseMedia.json" }
+        "/v1/admin/content": {
+            "$ref": "./paths/admin/contents.json"
+        },
+        "/v1/admin/content/{id}": {
+            "$ref": "./paths/admin/contentById.json"
+        },
+        "/v1/admin/exercise": {
+            "$ref": "./paths/admin/exercises.json"
+        },
+        "/v1/admin/exercise/{id}": {
+            "$ref": "./paths/admin/exerciseById.json"
+        },
+        "/v1/admin/upload": {
+            "$ref": "./paths/admin/upload.json"
+        },
+        "/v1/calendar": {
+            "$ref": "./paths/calendar/calendar.json"
+        },
+        "/v1/preferences/accessibility": {
+            "$ref": "./paths/preferences/accessibility.json"
+        },
+        "/v1/preferences/notifications": {
+            "$ref": "./paths/preferences/notifications.json"
+        },
+        "/v1/questions/onboard": {
+            "$ref": "./paths/onboarding/onboard.json"
+        },
+        "/v1/contact": {
+            "$ref": "./paths/contact/contact.json"
+        }
     },
     "components": {
         "schemas": {
-            
+            "file": {
+                "$ref": "./components/schemas/file.json"
+            },
+            "calendarEvent": {
+                "$ref": "./components/schemas/calendarEvent.json"
+            },
+            "question": {
+                "$ref": "./components/schemas/question.json"
+            },
+            "comment": {
+                "$ref": "./components/schemas/comment.json"
+            },
+            "responseComment": {
+                "$ref": "./components/schemas/responseComment.json"
+            }
+
         },
         "securitySchemes": {
             "bearerAuth": {

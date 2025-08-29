@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "uuid": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string",
+            "format": "uri"
+        }
+    }
+}
