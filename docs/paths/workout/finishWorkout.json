@@ -1,0 +1,53 @@
+{
+  "post": {
+    "summary": "Registra a conclusão de um treino.",
+    "tags": ["HU004"],
+    "description": "Registra a conclusão total ou parcial (até um determinado exercício) de um treino.",
+    "parameters": [
+      {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "description": "Id do usuário.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "workoutId": {
+                "type": "string",
+                "description": "Id do treino."
+              },
+              "completed": {
+                "type": "boolean"
+              },
+              "exerciseId": {
+                "type": "string",
+                "description": "Id do último exercício concluído. Se o campo 'completed' for 'true', este campo será ignorado."
+              }
+            },
+            "required": ["workoutId", "completed"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": { "description": "Progresso registrado com sucesso." },
+      "400": { "description": "Parâmetros de requisição inválidos" },
+      "401": { "description": "Token de autenticação ausente ou inválido" },
+      "403": { "description": "Usuário não tem permissão para acessar os treinos" },
+      "404": { "description": "Usuário não encontrado" },
+      "500": { "description": "Erro interno do servidor" }
+    },
+    "security": [
+      { "bearerAuth": [] }
+    ]
+}
+}

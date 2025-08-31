@@ -40,18 +40,13 @@
             }
         },
         {
-            "name": "categoryIds",
+            "name": "category",
             "in": "query",
-            "description": "Ids das categorias de publicação a serem procuradas.",
+            "description": "Categoria de publicação a ser procurada.",
             "required": false,
             "schema": {
-                "type": "array",
-                "items": {
-                    "type": "string"
-                }
-            },
-            "style": "form",
-            "explode": true
+                "type": "string"
+            }
         }
     ],
     "responses": {
@@ -80,6 +75,12 @@
                                     "description": "dd/MM/yyyy hh:mm:ss",
                                     "example": "23/08/2025 18:33:00"
                                 },
+                                "updatedAt": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "dd/MM/yyyy hh:mm:ss",
+                                    "example": "23/08/2025 18:33:00"
+                                },
                                 "approved": {
                                     "type": "boolean"
                                 },
@@ -87,19 +88,8 @@
                                     "type": "string",
                                     "example": "https://cdn.exemplo.com/capas/123.webp"
                                 },
-                                "categories": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
+                                "category": {
+                                    "type": "string"
                                 }
                             }
                         }

@@ -26,49 +26,7 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string",
-                                "description": "Descrição do exercício"
-                            },
-                            "duration": {
-                                "type": "string",
-                                "format": "time",
-                                "example": "1:30min"
-                            },
-                            "createdAt": {
-                                "type": "string",
-                                "format": "date-time",
-                                "description": "dd/MM/yyyy hh:mm:ss",
-                                "example": "23/08/2025 18:33:00"
-                            },
-                            "imageUrl": {
-                                "type": "string",
-                                "example": "https://cdn.exemplo.com/capas/123.webp"
-                            },
-                            "videoUrl": {
-                                "type": "string",
-                                "example": "https://cdn.exemplo.com/capas/123.webm"
-                            },
-                            "categories": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
+                            "$ref": "../../components/schemas/exercise.json"
                         }
                     }
                 }

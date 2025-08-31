@@ -1,0 +1,65 @@
+{
+"type": "object",
+"properties": {
+    "id": {
+        "type": "string"
+    },
+    "title": {
+        "type": "string"
+    },
+    "description": {
+        "type": "string",
+        "description": "Descrição do exercício"
+    },
+    "status": {
+        "type": "string",
+        "enum": ["COMPLETED", "PENDING", "IN_PROGRESS"]
+    },
+    "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "dd/MM/yyyy hh:mm:ss",
+        "example": "23/08/2025 18:33:00"
+    },
+    "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "dd/MM/yyyy hh:mm:ss",
+        "example": "23/08/2025 18:33:00"
+    },
+    "duration": {
+        "type": "string",
+        "format": "time",
+        "example": "1:30min"
+    },
+    "repetitions": {
+        "type": "integer"
+    },
+    "sets": {
+        "type": "integer"
+    },
+    "dueDate": {
+        "type": "string",
+        "format": "date",
+        "description": "dd/MM/yyyy",
+        "example": "23/08/2025"
+    },
+    "category": {
+        "type": "string"
+    },
+    "completedAt": {
+        "type": "string",
+        "format": "date",
+        "description": "dd/MM/yyyy",
+        "example": "23/08/2025"
+    },
+    "imageUrl": {
+        "type": "string",
+        "example": "https://cdn.exemplo.com/capas/123.webp"
+    },
+    "videoUrl": {
+        "type": "string",
+        "example": "https://cdn.exemplo.com/capas/123.webm"
+    }
+}
+}

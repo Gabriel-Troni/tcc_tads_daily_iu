@@ -1,0 +1,77 @@
+{
+"get": {
+    "summary": "Retorna os treinos do usuário em um intervalo de datas.",
+    "tags": ["HU004"],
+    "description": "Retorna os treinos a serem realizados pelo usuário no período informado, incluindo exercícios, imagens e vídeos.",
+    "parameters": [
+    {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "description": "ID do usuário.",
+        "schema": {
+        "type": "string"
+        }
+    },
+    {
+        "name": "startDate",
+        "in": "query",
+        "required": false,
+        "description": "Data inicial do intervalo.",
+        "schema": {
+        "type": "string",
+        "format": "date",
+        "description": "dd-MM-yyyy",
+        "example": "23-08-2025"
+        }
+    },
+    {
+        "name": "endDate",
+        "in": "query",
+        "required": false,
+        "description": "Data final do intervalo.",
+        "schema": {
+        "type": "string",
+        "format": "date",
+        "description": "dd-MM-yyyy",
+        "example": "23-08-2025"
+        }
+    }
+    ],
+    "responses": {
+    "200": {
+        "description": "Lista de treinos retornada com sucesso.",
+        "content": {
+        "application/json": {
+            "schema": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "exercises": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../components/schemas/exercise.json"
+                    }
+                }
+                }
+            }
+            }
+        }
+        }
+    },
+    "400": { "description": "Parâmetros de requisição inválidos" },
+    "401": { "description": "Token de autenticação ausente ou inválido" },
+    "403": { "description": "Usuário não tem permissão para acessar os treinos" },
+    "404": { "description": "Usuário não encontrado" },
+    "500": { "description": "Erro interno do servidor" }
+    },
+    "security": [
+    { "bearerAuth": [] }
+    ]
+}
+}

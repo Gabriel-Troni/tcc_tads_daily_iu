@@ -70,9 +70,15 @@
                                 "title": {
                                     "type": "string"
                                 },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "enum": ["COMPLETED", "PENDING", "IN_PROGRESS"]
+                                },
                                 "duration": {
                                     "type": "string",
-                                    "format": "time",
                                     "example": "1:30min"
                                 },
                                 "createdAt": {
@@ -81,19 +87,14 @@
                                     "description": "dd/MM/yyyy hh:mm:ss",
                                     "example": "23/08/2025 18:33:00"
                                 },
-                                "categories": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
+                                "updatedAt": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "dd/MM/yyyy hh:mm:ss",
+                                    "example": "23/08/2025 18:33:00"
+                                },
+                                "category": {
+                                    "type": "string"
                                 }
                             }
                         }

@@ -1,0 +1,48 @@
+{
+"patch": {
+    "summary": "Adiciona ou remove favorito da publicação da comunidade",
+    "tags": ["HU013"],
+    "description": "Adiciona ou remove a publicação dos favoritos do usuário.",
+    "parameters": [
+    {
+        "name": "id",
+        "in": "path",
+        "description": "Id da publicação.",
+        "required": true,
+        "schema": { "type": "string" }
+    }
+    ],
+    "security": [
+    { "bearerAuth": [] }
+    ],
+    "requestBody": {
+    "required": true,
+    "content": {
+        "application/json": {
+        "schema": {
+            "type": "object",
+            "properties": {
+            "userId": {
+                "type": "string",
+                "description": "Id do usuário."
+            },
+            "favorite": {
+                "type": "boolean",
+                "description": "Se true, adiciona aos favoritos; se false, remove."
+            }
+            },
+            "required": ["userId", "favorite"]
+        }
+        }
+    }
+    },
+    "responses": {
+    "204": { "description": "Favorito atualizado com sucesso." },
+    "400": { "description": "Dados de requisição inválidos." },
+    "401": { "description": "Token de autenticação ausente ou inválido." },
+    "403": { "description": "Usuário não tem permissão para atualizar favorito." },
+    "404": { "description": "Publicação ou usuário não encontrado." },
+    "500": { "description": "Erro interno do servidor." }
+    }
+}
+}

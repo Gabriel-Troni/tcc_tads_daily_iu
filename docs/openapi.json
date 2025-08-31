@@ -83,8 +83,20 @@
         "/v1/admin/upload": {
             "$ref": "./paths/admin/upload.json"
         },
+        "/v1/workout/{id}": {
+            "$ref": "./paths/workout/workoutByDate.json"
+        },
+        "/v1/workout": {
+            "$ref": "./paths/workout/finishWorkout.json"
+        },
+        "/v1/workout/feedback/{id}": {
+            "$ref": "./paths/workout/feedback.json"
+        },
         "/v1/calendar": {
             "$ref": "./paths/calendar/calendar.json"
+        },
+        "/v1/report/{id}": {
+            "$ref": "./paths/report/getReport.json"
         },
         "/v1/preferences/accessibility": {
             "$ref": "./paths/preferences/accessibility.json"
@@ -95,8 +107,26 @@
         "/v1/questions/onboard": {
             "$ref": "./paths/onboarding/onboard.json"
         },
+        "/v1/content": {
+            "$ref": "./paths/content/content.json"
+        },
+        "/v1/content/comment": {
+            "$ref": "./paths/content/comments.json"
+        },
+        "/v1/content/{id}": {
+            "$ref": "./paths/content/contentById.json"
+        },
         "/v1/contact": {
             "$ref": "./paths/contact/contact.json"
+        },
+        "/v1/community": {
+            "$ref": "./paths/community/posts.json"
+        },
+        "/v1/community/comment": {
+            "$ref": "./paths/community/comments.json"
+        },
+        "/v1/community/{id}": {
+            "$ref": "./paths/community/postById.json"
         }
     },
     "components": {
@@ -115,6 +145,9 @@
             },
             "responseComment": {
                 "$ref": "./components/schemas/responseComment.json"
+            },
+            "exercise": {
+                "$ref": "./components/schemas/exercise.json"
             }
 
         },

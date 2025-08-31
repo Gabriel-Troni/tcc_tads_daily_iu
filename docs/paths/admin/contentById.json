@@ -64,6 +64,12 @@
                                 "description": "dd/MM/yyyy hh:mm:ss",
                                 "example": "23/08/2025 18:33:00"
                             },
+                            "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "dd/MM/yyyy hh:mm:ss",
+                                "example": "23/08/2025 18:33:00"
+                            },
                             "approved": {
                                 "type": "boolean"
                             },
@@ -85,25 +91,8 @@
                                     "example": "https://cdn.exemplo.com/capas/123.webm"
                                 }
                             },
-                            "categories": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            },
-                            "comments": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "../../components/schemas/comment.json"
-                                }
+                            "category": {
+                                "type": "string"
                             }
                         }
                     }

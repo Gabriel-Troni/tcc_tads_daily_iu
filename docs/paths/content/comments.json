@@ -1,0 +1,185 @@
+{
+  "get": {
+    "summary": "Lista comentários de uma publicação",
+    "tags": ["HU012"],
+    "description": "Retorna os comentários da publicação informada, com paginação.",
+    "parameters": [
+      {
+        "name": "contentId",
+        "in": "query",
+        "description": "Id da publicação.",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "description": "Quantidade de comentários retornados.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 50,
+          "minimum": 1,
+          "maximum": 50
+        }
+      },
+      {
+        "name": "offset",
+        "in": "query",
+        "description": "Número de comentários a serem ignorados.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        }
+      }
+    ],
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "responses": {
+      "200": {
+        "description": "Lista de comentários retornada com sucesso.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "../../components/schemas/comment.json"
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Parâmetros de requisição inválidos." },
+      "401": { "description": "Token de autenticação ausente ou inválido." },
+      "403": { "description": "Usuário não tem permissão para acessar comentários." },
+      "404": { "description": "Publicação não encontrada." },
+      "500": { "description": "Erro interno do servidor." }
+    }
+  },
+  "post": {
+    "summary": "Adiciona um comentário a uma publicação",
+    "tags": ["HU012"],
+    "description": "Cria um novo comentário em uma publicação. Para responder um comentário, informe o commentId.",
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "contentId": {
+                "type": "string",
+                "description": "Id da publicação."
+              },
+              "userId": {
+                "type": "string",
+                "description": "Id do usuário."
+              },
+              "comment": {
+                "type": "string",
+                "description": "Texto do comentário."
+              },
+              "commentId": {
+                "type": ["string", "null"],
+                "description": "Id do comentário pai (para respostas) ou null."
+              }
+            },
+            "required": ["contentId", "userId", "comment"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": { "description": "Comentário criado com sucesso." },
+      "400": { "description": "Dados de requisição inválidos." },
+      "401": { "description": "Token de autenticação ausente ou inválido." },
+      "403": { "description": "Usuário não tem permissão para comentar." },
+      "404": { "description": "Publicação ou usuário não encontrado." },
+      "500": { "description": "Erro interno do servidor." }
+    }
+  },
+  "patch": {
+    "summary": "Atualiza um comentário",
+    "tags": ["HU012"],
+    "description": "Atualiza o texto de um comentário existente.",
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "commentId": {
+                "type": "string",
+                "description": "Id do comentário a ser atualizado."
+              },
+              "userId": {
+                "type": "string",
+                "description": "Id do usuário."
+              },
+              "comment": {
+                "type": "string",
+                "description": "Novo texto do comentário."
+              }
+            },
+            "required": ["commentId", "userId", "comment"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": { "description": "Comentário atualizado com sucesso." },
+      "400": { "description": "Dados de requisição inválidos." },
+      "401": { "description": "Token de autenticação ausente ou inválido." },
+      "403": { "description": "Usuário não tem permissão para atualizar comentário." },
+      "404": { "description": "Comentário ou usuário não encontrado." },
+      "500": { "description": "Erro interno do servidor." }
+    }
+  },
+  "delete": {
+    "summary": "Remove um comentário",
+    "tags": ["HU012"],
+    "description": "Remove um comentário existente. Usuários podem apagar seus comentários, admins podem apagar qualquer comentário.",
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "commentId": {
+                "type": "string",
+                "description": "Id do comentário a ser removido."
+              },
+              "userId": {
+                "type": "string",
+                "description": "Id do usuário."
+              }
+            },
+            "required": ["commentId", "userId"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": { "description": "Comentário removido com sucesso." },
+      "400": { "description": "Dados de requisição inválidos." },
+      "401": { "description": "Token de autenticação ausente ou inválido." },
+      "403": { "description": "Usuário não tem permissão para remover comentário." },
+      "404": { "description": "Comentário ou usuário não encontrado." },
+      "500": { "description": "Erro interno do servidor." }
+    }
+  }
+}
