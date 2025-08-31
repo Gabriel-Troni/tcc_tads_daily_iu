@@ -1,0 +1,25 @@
+{
+"type": "object",
+"properties": {
+    "id": {
+        "type": "string"
+    },
+    "username": {
+        "type": "string"
+    },
+    "comment": {
+        "type": "string"
+    },
+    "createdAt": {
+        "type": "date-time",
+        "format": "dd/MM/yyyy hh:mm:ss",
+        "example": "24/08/2025 09:25:00"
+    },
+    "responses": {
+        "type": "array",
+        "items": {
+            "$ref": "./responseComment.json"
+        }
+    }
+}
+}

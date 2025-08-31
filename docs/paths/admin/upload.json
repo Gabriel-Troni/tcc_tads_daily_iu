@@ -1,0 +1,66 @@
+{
+  "post": {
+    "summary": "Faz upload de mídias para a plataforma.",
+    "description": "Recebe um vetor de arquivos para upload. Retorna um vetor de arquivos com suas URLs.",
+    "tags": ["HU002", "HU003"],
+    "security": [
+      { "bearerAuth": [] }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "required": true,
+                "description": "Arquivos para upload."
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Mídias adicionadas com sucesso.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "../../components/schemas/file.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Dados de requisição inválidos."
+      },
+      "401": {
+        "description": "Token de autenticação ausente ou inválido."
+      },
+      "403": {
+        "description": "Usuário não tem permissão para enviar mídias."
+      },
+      "404": {
+        "description": "Exercício não encontrado."
+      },
+      "500": {
+        "description": "Erro interno do servidor."
+      }
+    }
+}
+}

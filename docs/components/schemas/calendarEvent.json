@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "description": "Mapa de eventos do calendário, onde a chave é a data ISO string e o valor contém informações do dia",
+  "additionalProperties": {
+    "type": "object",
+    "description": "Informações de um dia específico no calendário",
+    "properties": {
+      "leakageLevel": {
+        "type": "string",
+        "enum": ["NONE", "LOW", "MEDIUM", "HIGH"],
+        "description": "Nível de vazamento ou urgência dos eventos do dia"
+      },
+      "eventsCount": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Quantidade de micções registradas"
+      },
+      "completedExercises": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Número de exercícios completados no dia"
+      },
+      "notesPreview": {
+        "type": "string",
+        "maxLength": 255,
+        "description": "Preview das anotações do dia"
+      }
+    },
+    "additionalProperties": false
+  },
+  "example": {
+    "2025-08-26": {
+      "leakageLevel": "HIGH",
+      "eventsCount": 3,
+      "completedExercises": 2,
+      "notesPreview": "Muita urgência, dificuldade para segurar a urina"
+    },
+    "2025-08-27": {
+      "eventsCount": 1,
+      "completedExercises": 5,
+      "notesPreview": "Espirro"
+    },
+    "2025-08-28": {
+      "leakageLevel": "LOW",
+      "eventsCount": 0,
+      "completedExercises": 1
+    }
+  }
+}
