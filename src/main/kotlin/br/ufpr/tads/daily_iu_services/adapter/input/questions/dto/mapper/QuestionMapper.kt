@@ -1,7 +1,7 @@
-package br.ufpr.tads.daily_iu_services.adapter.input.dto.mapper
+package br.ufpr.tads.daily_iu_services.adapter.input.questions.dto.mapper
 
-import br.ufpr.tads.daily_iu_services.adapter.input.dto.QuestionDTO
-import br.ufpr.tads.daily_iu_services.adapter.input.dto.QuestionOptionDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.questions.dto.QuestionDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.questions.dto.QuestionOptionDTO
 import br.ufpr.tads.daily_iu_services.domain.entity.question.Question
 import br.ufpr.tads.daily_iu_services.domain.entity.question.QuestionOption
 import org.mapstruct.Mapper

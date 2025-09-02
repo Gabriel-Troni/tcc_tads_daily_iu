@@ -1,7 +1,7 @@
 package br.ufpr.tads.daily_iu_services.domain.service
 
-import br.ufpr.tads.daily_iu_services.adapter.input.dto.QuestionDTO
-import br.ufpr.tads.daily_iu_services.adapter.input.dto.mapper.QuestionMapper
+import br.ufpr.tads.daily_iu_services.adapter.input.questions.dto.QuestionDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.questions.dto.mapper.QuestionMapper
 import br.ufpr.tads.daily_iu_services.adapter.output.QuestionsRepository
 import org.springframework.stereotype.Service
 

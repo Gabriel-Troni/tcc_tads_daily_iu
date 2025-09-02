@@ -16,5 +16,4 @@ class Question(
     val labels: List<String>?,
     val required: Boolean?,
     val placeholder: String?
-) {
-}
+)
