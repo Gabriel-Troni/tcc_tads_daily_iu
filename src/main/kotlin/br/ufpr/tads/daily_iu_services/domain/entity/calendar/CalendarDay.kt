@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.mapping.MongoId
 @Document(collection = "calendar")
 class CalendarDay(
     @MongoId
-    val id: String,
+    val id: String? = null,
     val date: String,
     val userId: String,
-    val leakageLevel: LeakageLevel,
-    val eventsCount: Int,
-    val completedExercises: Int,
-    val notesPreview: String?,
-    val urinationData: List<UrinationData>?,
+    var leakageLevel: LeakageLevel,
+    var eventsCount: Int,
+    var completedExercises: Int,
+    var notesPreview: String?,
+    var urinationData: List<UrinationData>?,
     val dayTitle: String
 )

@@ -13,4 +13,6 @@ interface CalendarRepository : MongoRepository<CalendarDay, String> {
 
     @Query("{ 'date': { \$gte: ?0, \$lte: ?1 }, 'userId': ?2 }")
     fun findByDateRangeAndUserId(startDate: String, endDate: String, userId: String): List<CalendarDay>
+
+    fun findByDateAndUserId(date: String, userId: String): CalendarDay?
 }
