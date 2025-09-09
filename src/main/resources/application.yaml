@@ -11,4 +11,12 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    database-platform: org.hibernate.dialect.SQLServerDialect
+    database-platform: org.hibernate.dialect.SQLServerDialect    
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: email@email.com
+    password: senha-app
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true

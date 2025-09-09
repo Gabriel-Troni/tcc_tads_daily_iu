@@ -1,5 +1,6 @@
-package br.ufpr.tads.daily_iu_services.adapter.input
-import br.ufpr.tads.daily_iu_services.adapter.input.dto.AccessibilityDTO
+package br.ufpr.tads.daily_iu_services.adapter.input.preferences
+
+import br.ufpr.tads.daily_iu_services.adapter.input.preferences.dto.AccessibilityDTO
 import br.ufpr.tads.daily_iu_services.domain.service.AccessibilityService
 import jakarta.validation.constraints.Min
 import org.springframework.http.ResponseEntity
