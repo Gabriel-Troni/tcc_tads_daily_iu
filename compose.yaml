@@ -1,9 +1,32 @@
 services:
-  mongodb:
-    image: 'mongo:latest'
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    env_file:
+      - .env
     environment:
-      - 'MONGO_INITDB_DATABASE=mydatabase'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ${DB_PASSWORD}
     ports:
-      - '27017'
+      - "1433:1433"
+    networks:
+      - dailyiu-network
+
+  ssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./src/test/resources/scripts/init.sql:/tmp/init.sql
+    env_file:
+      - .env
+    entrypoint: >
+      /bin/bash -c "
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${DB_PASSWORD} -d master -i /tmp/init.sql
+      "
+    networks:
+      - dailyiu-network
+
+networks:
+  dailyiu-network:
+    driver: bridge

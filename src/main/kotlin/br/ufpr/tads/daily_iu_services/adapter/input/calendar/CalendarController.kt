@@ -22,7 +22,7 @@ class CalendarController(private val calendarService: CalendarService) {
     fun getCalendarEvents(
         @RequestParam(required = false) @ValidDate(required = false) from: String?,
         @RequestParam(required = false) @ValidDate(required = false) to: String?,
-        @RequestHeader(value = "user-id") userId: String
+        @RequestHeader(value = "user-id") userId: Long
     ): ResponseEntity<HashMap<String, CalendarDayDTO>> {
         return ResponseEntity.ok(calendarService.getCalendarEvents(userId, from, to))
     }
@@ -30,7 +30,7 @@ class CalendarController(private val calendarService: CalendarService) {
     @PutMapping
     fun setCalendarEvent(
         @RequestBody @Valid request: CalendarRequestDTO,
-        @RequestHeader(value = "user-id") userId: String
+        @RequestHeader(value = "user-id") userId: Long
     ): ResponseEntity<CalendarDayDTO> {
         return ResponseEntity.ok(calendarService.createOrUpdateEvent(userId, request))
     }

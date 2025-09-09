@@ -1,18 +1,22 @@
 package br.ufpr.tads.daily_iu_services.domain.entity.calendar
 
-import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.data.mongodb.core.mapping.MongoId
+import jakarta.persistence.*
 
-@Document(collection = "calendar")
+@Entity
+@Table(name = "calendarDay")
 class CalendarDay(
-    @MongoId
-    val id: String? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
+
     val date: String,
-    val userId: String,
+    val userId: Long,
+
+    @Enumerated(EnumType.STRING)
     var leakageLevel: LeakageLevel,
+
     var eventsCount: Int,
     var completedExercises: Int,
     var notesPreview: String?,
-    var urinationData: List<UrinationData>?,
     val dayTitle: String
 )

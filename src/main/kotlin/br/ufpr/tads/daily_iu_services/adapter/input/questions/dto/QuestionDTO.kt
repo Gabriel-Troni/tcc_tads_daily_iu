@@ -11,7 +11,6 @@ data class QuestionDTO(
     val min: Int?,
     val max: Int?,
     val step: Int?,
-    val labels: List<String>?,
     val required: Boolean?,
     val placeholder: String?
 )

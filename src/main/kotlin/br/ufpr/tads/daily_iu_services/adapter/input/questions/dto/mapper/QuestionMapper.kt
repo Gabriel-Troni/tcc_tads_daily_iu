@@ -15,6 +15,7 @@ interface QuestionMapper {
         val INSTANCE: QuestionMapper = Mappers.getMapper(QuestionMapper::class.java)
     }
 
+    @Mapping(target = "id", source = "externalId")
     @Mapping(target = "type", expression = "java(question.getType().getValue())")
     fun questionToQuestionDTO(question: Question): QuestionDTO
 
