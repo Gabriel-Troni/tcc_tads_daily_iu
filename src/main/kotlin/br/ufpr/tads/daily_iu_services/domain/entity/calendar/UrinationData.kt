@@ -9,6 +9,7 @@ class UrinationData(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @Column(name = "timeValue")
     val time: String,
 
     @ManyToOne(fetch = FetchType.LAZY)

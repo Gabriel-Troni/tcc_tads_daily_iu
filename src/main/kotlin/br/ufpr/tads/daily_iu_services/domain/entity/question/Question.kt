@@ -18,7 +18,9 @@ class Question(
     @OneToMany(mappedBy = "question", targetEntity = QuestionOption::class, cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var options: List<QuestionOption>?,
 
+    @Column(name = "minValue")
     val min: Int?,
+    @Column(name = "maxValue")
     val max: Int?,
     val step: Int?,
     val required: Boolean?,

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CalendarRepository : JpaRepository<CalendarDay, Long> {
 
-    @Query("SELECT * FROM CalendarDay c WHERE MONTH(c.date) = :month AND YEAR(c.date) = :year AND c.userId = :userId", nativeQuery = true)
+    @Query("SELECT * FROM CalendarDay c WHERE MONTH(c.dateValue) = :month AND YEAR(c.dateValue) = :year AND c.userId = :userId", nativeQuery = true)
     fun findByMonthAndUserId(@Param("month") month: Int, @Param("year") year: Int, @Param("userId") userId: Long): List<CalendarDay>
 
     @Query("SELECT c FROM CalendarDay c WHERE c.date BETWEEN :startDate AND :endDate AND c.userId = :userId")

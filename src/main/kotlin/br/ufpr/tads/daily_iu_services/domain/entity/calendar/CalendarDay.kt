@@ -9,6 +9,7 @@ class CalendarDay(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @Column(name = "dateValue")
     val date: String,
     val userId: Long,
 

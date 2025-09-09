@@ -13,5 +13,7 @@ class QuestionOption(
     @JoinColumn(name = "questionId")
     val question: Question?,
     val label: String,
+
+    @Column(name = "textValue")
     val value: String
 )
