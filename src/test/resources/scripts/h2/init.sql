@@ -1,11 +1,11 @@
 -- Tabela principal de usuários
-CREATE TABLE appUser (
+CREATE TABLE IF NOT EXISTS appUser (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
 -- Tabela principal de questões com campos adicionais
-CREATE TABLE question (
+CREATE TABLE IF NOT EXISTS question (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     externalId VARCHAR(50),
     text VARCHAR(10000) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE question (
 );
 
 -- Tabela para armazenar as opções das questões (para RADIO e CHECKBOX)
-CREATE TABLE questionOption (
+CREATE TABLE IF NOT EXISTS questionOption (
     id INT AUTO_INCREMENT PRIMARY KEY,
     questionId BIGINT,
     label VARCHAR(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE questionOption (
 );
 
 -- Tabela para armazenar registros para o diário miccional
-CREATE TABLE calendarDay (
+CREATE TABLE IF NOT EXISTS calendarDay (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dateValue DATE NOT NULL,
     userId BIGINT NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE calendarDay (
     FOREIGN KEY (userId) REFERENCES appUser(id)
 );
 
-CREATE TABLE urinationData (
+CREATE TABLE IF NOT EXISTS urinationData (
     id INT AUTO_INCREMENT PRIMARY KEY,
     calendarDayId INT NOT NULL,
     timeValue TIME NOT NULL,

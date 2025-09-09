@@ -1,3 +1,10 @@
+-- Limpando tabelas para evitar conflitos
+DELETE FROM urinationData;
+DELETE FROM calendarDay;
+DELETE FROM questionOption;
+DELETE FROM question;
+DELETE FROM appUser;
+
 -- Inserindo as questões
 INSERT INTO question (externalId, text, type, required, placeholder, minValue, maxValue, step) VALUES
 ('birthdate', 'Qual sua data de nascimento?',

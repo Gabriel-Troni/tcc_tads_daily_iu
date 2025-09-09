@@ -14,7 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   sql:
     init:
-      mode: always
+      mode: embedded
       schema-locations: classpath:scripts/h2/init.sql
       data-locations: classpath:scripts/h2/data.sql
   mail:
