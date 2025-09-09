@@ -19,8 +19,8 @@ CREATE TABLE question (
     type NVARCHAR(10) NOT NULL,
     required BIT NOT NULL DEFAULT 0,
     placeholder NVARCHAR(255),
-    min INT,
-    max INT,
+    minValue INT,
+    maxValue INT,
     step INT
 );
 GO
@@ -30,7 +30,7 @@ CREATE TABLE questionOption (
     id INT IDENTITY(1,1) PRIMARY KEY,
     questionId BIGINT,
     label NVARCHAR(255) NOT NULL,
-    value NVARCHAR(50) NOT NULL,
+    textValue NVARCHAR(50) NOT NULL,
     FOREIGN KEY (questionId) REFERENCES question(id)
 );
 GO
@@ -38,7 +38,7 @@ GO
 -- Tabela para armazenar registros para o diário miccional
 CREATE TABLE calendarDay (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    date DATE NOT NULL,
+    dateValue DATE NOT NULL,
     userId BIGINT NOT NULL,
     leakageLevel NVARCHAR(20) NOT NULL,
     eventsCount INT NOT NULL DEFAULT 0,
@@ -52,7 +52,7 @@ GO
 CREATE TABLE urinationData (
     id INT IDENTITY(1,1) PRIMARY KEY,
     calendarDayId INT NOT NULL,
-    time TIME NOT NULL,
+    timeValue TIME NOT NULL,
     amount NVARCHAR(20) NOT NULL,
     leakage BIT NOT NULL DEFAULT 0,
     reason NVARCHAR(MAX),
@@ -62,7 +62,7 @@ CREATE TABLE urinationData (
 GO
 
 -- Inserindo as questões
-INSERT INTO question (externalId, text, type, required, placeholder, min, max, step) VALUES
+INSERT INTO question (externalId, text, type, required, placeholder, minValue, maxValue, step) VALUES
 ('birthdate', 'Qual sua data de nascimento?', 
     'DATE', 1, 'Dia / Mês / Ano', NULL, NULL, NULL);
 
@@ -78,7 +78,7 @@ INSERT INTO question (externalId, text, type, required) VALUES
 ('q4_amount', 'Como você quantifica sua perda de urina?',
     'RADIO', 1);
 
-INSERT INTO question (externalId, text, type, required, min, max, step) VALUES
+INSERT INTO question (externalId, text, type, required, minValue, maxValue, step) VALUES
 ('q5_interference', 'Em geral, quanto que perder urina interfere em sua vida diária? (0 = não interfere, 10 = interfere muito)',
     'SLIDER', 1, 0, 10, 1);
 
@@ -88,13 +88,13 @@ INSERT INTO question (externalId, text, type, required) VALUES
 GO
 
 -- Inserindo as opções para a questão de gênero
-INSERT INTO questionOption (questionId, label, value) VALUES
+INSERT INTO questionOption (questionId, label, textValue) VALUES
 ((SELECT id FROM question WHERE externalId = 'gender'), 'Masculino', 'M'),
-((SELECT id FROM question WHERE externalId = 'gender'), 'Femininino', 'F');
+((SELECT id FROM question WHERE externalId = 'gender'), 'Feminino', 'F');
 GO
 
 -- Inserindo as opções para a questão de frequência
-INSERT INTO questionOption (questionId, label, value) VALUES
+INSERT INTO questionOption (questionId, label, textValue) VALUES
 ((SELECT id FROM question WHERE externalId = 'q3_frequency'), 'Nunca', '0'),
 ((SELECT id FROM question WHERE externalId = 'q3_frequency'), 'Uma vez por semana ou menos', '1'),
 ((SELECT id FROM question WHERE externalId = 'q3_frequency'), 'Duas a três vezes por semana', '2'),
@@ -104,7 +104,7 @@ INSERT INTO questionOption (questionId, label, value) VALUES
 GO
 
 -- Inserindo as opções para a questão de quantidade
-INSERT INTO questionOption (questionId, label, value) VALUES
+INSERT INTO questionOption (questionId, label, textValue) VALUES
 ((SELECT id FROM question WHERE externalId = 'q4_amount'), 'Nenhuma', '0'),
 ((SELECT id FROM question WHERE externalId = 'q4_amount'), 'Uma pequena quantidade', '2'),
 ((SELECT id FROM question WHERE externalId = 'q4_amount'), 'Uma quantidade moderada', '4'),
@@ -112,7 +112,7 @@ INSERT INTO questionOption (questionId, label, value) VALUES
 GO
 
 -- Inserindo as opções para a questão de momentos
-INSERT INTO questionOption (questionId, label, value) VALUES
+INSERT INTO questionOption (questionId, label, textValue) VALUES
 ((SELECT id FROM question WHERE externalId = 'q6_when'), 'Nunca', '0'),
 ((SELECT id FROM question WHERE externalId = 'q6_when'), 'Antes de chegar ao banheiro', '1'),
 ((SELECT id FROM question WHERE externalId = 'q6_when'), 'Perco antes de terminar de urinar e/ou após urinar', '2'),
@@ -128,7 +128,7 @@ INSERT INTO appUser (name) VALUES
 ('Usuário 2');
 
 -- Inserindo dados do calendário
-INSERT INTO calendarDay (date, userId, leakageLevel, eventsCount, completedExercises, notesPreview, dayTitle) VALUES
+INSERT INTO calendarDay (dateValue, userId, leakageLevel, eventsCount, completedExercises, notesPreview, dayTitle) VALUES
 ('2025-06-01', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'LOW', 1, 1, 'Dia tranquilo.', 'seg'),
 ('2025-06-05', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'LOW', 1, 2, 'Pouca urgência.', 'qui'),
 ('2025-06-10', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'MEDIUM', 1, 0, NULL, 'ter'),
@@ -148,19 +148,19 @@ INSERT INTO calendarDay (date, userId, leakageLevel, eventsCount, completedExerc
 GO
 
 -- Inserindo dados de urinação
-INSERT INTO urinationData (calendarDayId, time, amount, leakage, reason, urgency) VALUES
-((SELECT id FROM calendarDay WHERE date = '2025-06-01' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '12:30', 'LOW', 0, 'Almoço', 0),
-((SELECT id FROM calendarDay WHERE date = '2025-06-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '09:00', 'LOW', 0, NULL, 0),
-((SELECT id FROM calendarDay WHERE date = '2025-06-10' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '07:45', 'MEDIUM', 1, 'Acordou com urgência', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-06-15' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '23:30', 'HIGH', 1, 'Sono profundo', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-07-08' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '15:20', 'LOW', 0, 'Após exercício', 0),
-((SELECT id FROM calendarDay WHERE date = '2025-07-14' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:00', 'MEDIUM', 1, 'Trânsito', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-08-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '08:45', 'HIGH', 1, 'Café da manhã', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-08-10' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '11:00', 'NONE', 0, NULL, 0),
-((SELECT id FROM calendarDay WHERE date = '2025-08-20' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '14:30', 'LOW', 0, 'Almoço', 0),
-((SELECT id FROM calendarDay WHERE date = '2025-06-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '09:30', 'MEDIUM', 1, 'Trabalho', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-07-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '22:00', 'HIGH', 1, 'Sono profundo', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-08-07' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '13:00', 'LOW', 0, 'Almoço', 0),
-((SELECT id FROM calendarDay WHERE date = '2025-08-22' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '16:45', 'MEDIUM', 1, 'Trânsito', 1),
-((SELECT id FROM calendarDay WHERE date = '2025-09-02' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:42', 'LOW', 0, 'Cafézinho da tarde', 0);
+INSERT INTO urinationData (calendarDayId, timeValue, amount, leakage, reason, urgency) VALUES
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-01' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '12:30', 'LOW', 0, 'Almoço', 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '09:00', 'LOW', 0, NULL, 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-10' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '07:45', 'MEDIUM', 1, 'Acordou com urgência', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-15' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '23:30', 'HIGH', 1, 'Sono profundo', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-07-08' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '15:20', 'LOW', 0, 'Após exercício', 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-07-14' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:00', 'MEDIUM', 1, 'Trânsito', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '08:45', 'HIGH', 1, 'Café da manhã', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-10' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '11:00', 'NONE', 0, NULL, 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-20' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '14:30', 'LOW', 0, 'Almoço', 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '09:30', 'MEDIUM', 1, 'Trabalho', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-07-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '22:00', 'HIGH', 1, 'Sono profundo', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-07' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '13:00', 'LOW', 0, 'Almoço', 0),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-22' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '16:45', 'MEDIUM', 1, 'Trânsito', 1),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-09-02' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:42', 'LOW', 0, 'Cafézinho da tarde', 0);
 GO

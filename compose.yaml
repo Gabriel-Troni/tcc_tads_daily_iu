@@ -17,7 +17,7 @@ services:
     depends_on:
       - sqlserver
     volumes:
-      - ./src/test/resources/scripts/init.sql:/tmp/init.sql
+      - ./src/test/resources/scripts/mssql/init.sql:/tmp/init.sql
     env_file:
       - .env
     entrypoint: >

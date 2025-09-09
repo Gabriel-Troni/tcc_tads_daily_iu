@@ -20,3 +20,8 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+project:
+  dailyiu:
+    support:
+      email: suporte.daily.iu@gmail.com
+      noreply: noreply.daily.iu@gmail.com
