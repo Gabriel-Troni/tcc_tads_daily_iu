@@ -18,11 +18,17 @@ services:
       - sqlserver
     volumes:
       - ./src/test/resources/scripts/mssql/init.sql:/tmp/init.sql
+      - ./src/test/resources/scripts/mssql/data.sql:/tmp/data.sql
     env_file:
       - .env
     entrypoint: >
       /bin/bash -c "
-      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${DB_PASSWORD} -d master -i /tmp/init.sql
+        echo 'Aguardando o SQL Server iniciar...';
+        sleep 2;
+        echo 'Executando script de inicialização do banco de dados...';
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${DB_PASSWORD} -d master -i /tmp/init.sql &&
+        echo 'Script de inicialização concluído. Inserindo dados...';
+        /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${DB_PASSWORD} -d master -i /tmp/data.sql
       "
     networks:
       - dailyiu-network

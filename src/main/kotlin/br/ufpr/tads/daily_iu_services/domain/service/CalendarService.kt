@@ -9,6 +9,7 @@ import br.ufpr.tads.daily_iu_services.adapter.output.calendar.UrinationDataRepos
 import br.ufpr.tads.daily_iu_services.domain.entity.calendar.CalendarDay
 import br.ufpr.tads.daily_iu_services.domain.entity.calendar.LeakageLevel
 import br.ufpr.tads.daily_iu_services.domain.entity.calendar.UrinationData
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -33,6 +34,7 @@ class CalendarService(
             .associateBy { it.date } as HashMap<String, CalendarDayDTO>
     }
 
+    @Transactional
     fun createOrUpdateEvent(userId: Long, request: CalendarRequestDTO): CalendarDayDTO {
         var event: CalendarDay? = calendarRepository.findByDateAndUserId(request.date, userId)
         val data: List<UrinationData>?
