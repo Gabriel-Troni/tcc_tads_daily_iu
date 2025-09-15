@@ -11,7 +11,7 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    database-platform: org.hibernate.dialect.SQLServerDialect    
+    database-platform: org.hibernate.dialect.SQLServerDialect
   mail:
     host: smtp.gmail.com
     port: 587
@@ -20,8 +20,16 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 500MB
 project:
   dailyiu:
     support:
       email: suporte.daily.iu@gmail.com
       noreply: noreply.daily.iu@gmail.com
+    azure:
+      storage:
+        connection-string: ${AZURE_STORAGE_CONNECTION_STRING}
+        container-name: ${AZURE_STORAGE_CONTAINER_NAME}

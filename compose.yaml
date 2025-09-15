@@ -33,6 +33,15 @@ services:
     networks:
       - dailyiu-network
 
+  localblobstorage:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: localblobstorage
+    volumes:
+      - ./data/azurite:/data
+    ports:
+      - "10000:10000"
+    command: "azurite-blob --blobHost 0.0.0.0 -l /data"
+
 networks:
   dailyiu-network:
     driver: bridge

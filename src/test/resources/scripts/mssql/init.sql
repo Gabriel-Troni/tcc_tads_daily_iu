@@ -109,7 +109,8 @@ GO
 CREATE TABlE media (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
     url NVARCHAR(255) NOT NULL,
-    type NVARCHAR(10) NOT NULL,
+    contentType NVARCHAR(10) NOT NULL,
+    contentSize BIGINT NOT NULL,
     description NVARCHAR(1000),
     altText NVARCHAR(255) NOT NULL,
     caption NVARCHAR(255) DEFAULT NULL,
