@@ -123,3 +123,16 @@ INSERT INTO urinationData (calendarDayId, timeValue, amount, leakage, reason, ur
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-08-22' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '16:45', 'MEDIUM', 1, 'Trânsito', 1),
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-09-02' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:42', 'LOW', 0, 'Cafézinho da tarde', 0);
 GO
+
+--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
+
+-- Inserindo dados da rede social
+
+INSERT INTO contentCategory (name, description, auditable) VALUES
+('Alimentação e Nutrição', 'Dicas de alimentos que ajudam na saúde do trato urinário, receitas funcionais, e orientações nutricionais.', 0),
+('Hábitos Saudáveis', 'Rotinas que favorecem o bem-estar, como exercícios físicos, sono, hidratação e autocuidado.', 0),
+('Dicas de Fisioterapia Pélvica', 'Conteúdos educativos sobre exercícios, técnicas e orientações fisioterapêuticas.', 1),
+('Depoimentos e Histórias Reais', 'Espaço para relatos de superação, experiências com tratamentos e apoio emocional.', 0),
+('Mitos e Verdades', 'Desmistificação de crenças populares sobre incontinência urinária e saúde íntima.', 1),
+('Profissionais Respondem', 'Sessão para perguntas e respostas com especialistas (fisioterapeutas, nutricionistas, médicos).', 1);
+GO

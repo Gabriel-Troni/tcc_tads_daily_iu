@@ -1,6 +1,6 @@
 package br.ufpr.tads.daily_iu_services.domain.service
 
-import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.MediaDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.MediaCreateDTO
 import com.azure.storage.blob.BlobContainerClient
 import com.azure.storage.blob.BlobServiceClient
 import com.azure.storage.blob.BlobServiceClientBuilder
@@ -42,8 +42,8 @@ class MediaService {
      * @param files Array de arquivos para upload
      * @return Lista com as URLs públicas dos arquivos
      */
-    fun upload(files: Array<MultipartFile>): List<MediaDTO> {
-        val media = mutableListOf<MediaDTO>()
+    fun upload(files: Array<MultipartFile>): List<MediaCreateDTO> {
+        val media = mutableListOf<MediaCreateDTO>()
 
         for (file in files) {
             if (file.isEmpty) continue
@@ -55,7 +55,7 @@ class MediaService {
             try {
                 val blobClient = getBlobContainerClient().getBlobClient(uniqueFilename)
                 blobClient.upload(file.inputStream, file.size, true)
-                media.add(MediaDTO(blobClient.blobUrl, file.contentType, file.size, null, null, null, null))
+                media.add(MediaCreateDTO(blobClient.blobUrl, file.contentType, file.size))
             } catch (e: IOException) {
                 throw RuntimeException("Falha ao fazer upload do arquivo $originalFilename", e)
             }

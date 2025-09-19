@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class MediaDTO(
     val url: String,
-    val contentType: String?,
+    val contentType: String,
     val contentSize: Long,
     val description: String?,
-    val altText: String?,
+    val altText: String,
     val caption: String?,
-    val createdAt: String?
+    val createdAt: String
 )

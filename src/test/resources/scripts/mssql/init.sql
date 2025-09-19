@@ -155,14 +155,7 @@ CREATE TABLE contentCategory (
     id INT IDENTITY(1,1) PRIMARY KEY,
     name NVARCHAR(100) NOT NULL UNIQUE,
     description NVARCHAR(255),
-    createdAt DATETIME2 NOT NULL DEFAULT GETDATE()
-);
-GO
-
-CREATE TABLE contentTag (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name NVARCHAR(100) NOT NULL UNIQUE,
-    description NVARCHAR(255),
+    auditable BIT NOT NULL DEFAULT 0,
     createdAt DATETIME2 NOT NULL DEFAULT GETDATE()
 );
 GO
@@ -171,8 +164,9 @@ CREATE TABLE content (
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
     title NVARCHAR(255) NOT NULL,
     description NVARCHAR(MAX),
+    subtitle NVARCHAR(255),
+    subContent NVARCHAR(MAX),
     categoryId INT NOT NULL,
-    coverMediaId BIGINT,
     authorId BIGINT,
     repost BIT NOT NULL DEFAULT 0,
     repostFromcontentId BIGINT DEFAULT NULL,
@@ -194,7 +188,8 @@ CREATE TABLE comment (
     replyToCommentId BIGINT DEFAULT NULL,
     createdAt DATETIME2 NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (contentId) REFERENCES content(id),
-    FOREIGN KEY (authorId) REFERENCES appUser(id)
+    FOREIGN KEY (authorId) REFERENCES appUser(id),
+    FOREIGN KEY (replyToCommentId) REFERENCES comment(id)
 );
 GO
 
@@ -222,14 +217,5 @@ CREATE TABLE contentMedia (
     mediaId BIGINT NOT NULL,
     FOREIGN KEY (contentId) REFERENCES content(id),
     FOREIGN KEY (mediaId) REFERENCES media(id)
-);
-GO
-
-CREATE TABLE contentTagRelation (
-    id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    contentId BIGINT NOT NULL,
-    tagId INT NOT NULL,
-    FOREIGN KEY (contentId) REFERENCES content(id),
-    FOREIGN KEY (tagId) REFERENCES contentTag(id)
 );
 GO

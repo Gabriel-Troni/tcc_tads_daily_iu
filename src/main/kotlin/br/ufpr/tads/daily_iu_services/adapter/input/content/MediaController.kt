@@ -1,6 +1,6 @@
 package br.ufpr.tads.daily_iu_services.adapter.input.content
 
-import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.MediaDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.MediaCreateDTO
 import br.ufpr.tads.daily_iu_services.domain.service.MediaService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile
 class MediaController(private val mediaService: MediaService) {
 
     @PostMapping("/upload")
-    fun uploadMedia(@RequestParam("files") files: Array<MultipartFile>): ResponseEntity<List<MediaDTO>> {
+    fun uploadMedia(@RequestParam("files") files: Array<MultipartFile>): ResponseEntity<List<MediaCreateDTO>> {
         return ResponseEntity.ok(mediaService.upload(files))
     }
-
 }
