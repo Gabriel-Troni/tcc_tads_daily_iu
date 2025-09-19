@@ -33,3 +33,6 @@ project:
       storage:
         connection-string: ${AZURE_STORAGE_CONNECTION_STRING}
         container-name: ${AZURE_STORAGE_CONTAINER_NAME}
+    security:
+      token:
+        secret: ${JWT_SECRET}

@@ -66,8 +66,8 @@ GO
 
 -- Inserindo dados de teste para usuários e diário miccional
 INSERT INTO credential (passwordHash, salt) VALUES
-('hash1', 'salt1'),
-('hash2', 'salt2');
+('1thzHtxdZlMY1Eyy90PCHNPUkbetaYCC8JjWIAgmxvo=', 'DghbE3gLRofkyVuZZ37oQA=='),
+('z943fyO/J1bjRnoXt7Segm2h2c6e6tuS/bHMlSCPZJs=', '1HCmqwTC12DzqNpVKdQ0Uw==');
 GO
 
 
