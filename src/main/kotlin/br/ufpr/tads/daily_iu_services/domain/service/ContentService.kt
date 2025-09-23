@@ -2,6 +2,7 @@ package br.ufpr.tads.daily_iu_services.domain.service
 
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentCreatorDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentRepostDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentSimpleDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentUpdateDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.LikeToggleDTO
@@ -34,7 +35,12 @@ class ContentService(
 
     fun getContentById(id: Long, userId: Long): ContentDTO {
         val content = contentRepository.findById(id).orElseThrow {
-            throw NotFoundException("Conteúdo com $id não encontrado")
+            throw NotFoundException("Conteúdo com id $id não encontrado")
+        }
+
+        content.comments.sortBy { it.createdAt }
+        if (content.comments.size > 15) {
+            content.comments.removeAll { it != content.comments.take(15) }
         }
 
         return ContentMapper.INSTANCE.contentToDTO(content, userId)
@@ -122,6 +128,35 @@ class ContentService(
         }
 
         contentRepository.delete(existingContent)
+    }
+
+    fun repostContent(contentId: Long, request: ContentRepostDTO): ContentDTO {
+        val originalContent = contentRepository.findById(contentId).orElseThrow {
+            throw NotFoundException("Conteúdo com id $contentId não encontrado")
+        }
+
+        val repostByUser = userRepository.findById(request.repostedByUserId).orElseThrow {
+            throw NotFoundException("Usuário com id ${request.repostedByUserId} não encontrado")
+        }
+
+        val repostedContent = originalContent.copy(
+            id = null,
+            repost = true,
+            repostFromContentId = originalContent.id,
+            repostByAuthor = repostByUser,
+            likes = mutableListOf(),
+            comments = mutableListOf(),
+            media = mutableListOf()
+        )
+
+        val repostMedias = originalContent.media.map { originalContentMedia ->
+            val media = originalContentMedia.media
+            ContentMedia(content = repostedContent, media = media)
+        }
+        repostedContent.media.addAll(repostMedias)
+
+        val result = contentRepository.save(repostedContent)
+        return ContentMapper.INSTANCE.contentToDTO(result, request.repostedByUserId)
     }
 
     fun toggleLikeContent(contentId: Long, toggle: LikeToggleDTO) {

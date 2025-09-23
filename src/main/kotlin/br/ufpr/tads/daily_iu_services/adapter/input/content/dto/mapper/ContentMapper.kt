@@ -86,6 +86,7 @@ abstract class ContentMapper {
     abstract fun mediaToDTO(entity: ContentMedia): MediaDTO
 
     @Mapping(target = "createdAt", constant = "")
+    @Mapping(target = "id", constant = "0l")
     abstract fun mediaDTOToEntity(dto: MediaDTO): Media
 
     @Mapping(target = "id", source = "comment.id")

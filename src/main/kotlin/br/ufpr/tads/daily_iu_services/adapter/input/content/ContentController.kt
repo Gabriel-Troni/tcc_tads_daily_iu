@@ -2,6 +2,7 @@ package br.ufpr.tads.daily_iu_services.adapter.input.content
 
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentCreatorDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentDTO
+import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentRepostDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentSimpleDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.ContentUpdateDTO
 import br.ufpr.tads.daily_iu_services.adapter.input.content.dto.LikeToggleDTO
@@ -29,8 +30,10 @@ class ContentController(private val service: ContentService) {
     }
 
     @PostMapping("/repost/{id}")
-    fun repostContent(@PathVariable("id") id: Long): ResponseEntity<ContentDTO> {
-        TODO("Not yet implemented")
+    fun repostContent(
+        @PathVariable("id") id: Long,
+        @RequestBody @Valid request: ContentRepostDTO): ResponseEntity<ContentDTO> {
+        return ResponseEntity.ok(service.repostContent(id, request))
     }
 
     @GetMapping

@@ -16,14 +16,14 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "comment")
-class Comment(
+data class Comment(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "contentId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "contentId")
     val content: Content,
 
     @OneToOne
@@ -31,18 +31,21 @@ class Comment(
     val author: User,
 
     var text: String,
-    val reply: Boolean,
+    val reply: Boolean = false,
 
-    @OneToMany
-    @JoinColumn(name = "replyToCommentId", referencedColumnName = "id")
-    val replies: List<Comment>,
+    @ManyToOne
+    @JoinColumn(name = "replyToCommentId")
+    val replyToComment: Comment? = null,
+
+    @OneToMany(mappedBy = "replyToComment")
+    val replies: MutableList<Comment> = mutableListOf(),
 
     @OneToMany(mappedBy = "comment", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val likes: List<CommentLikes>,
+    val likes: MutableList<CommentLikes> = mutableListOf(),
 
     @Column(insertable = false, updatable = false)
-    val createdAt: String,
+    val createdAt: String = "",
 
     @Column(insertable = false, updatable = false)
-    val updatedAt: String
+    val updatedAt: String = ""
 )

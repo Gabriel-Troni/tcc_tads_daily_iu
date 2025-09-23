@@ -19,6 +19,6 @@ class CommentLikes(
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "commentId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "commentId")
     val comment: Comment,
 )
