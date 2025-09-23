@@ -1,6 +1,7 @@
 package br.ufpr.tads.daily_iu_services.domain.entity.content
 
 import br.ufpr.tads.daily_iu_services.domain.entity.user.User
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -20,6 +21,7 @@ class Comment(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "contentId", referencedColumnName = "id", insertable = false, updatable = false)
     val content: Content,
@@ -31,13 +33,16 @@ class Comment(
     var text: String,
     val reply: Boolean,
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "replyToCommentId", referencedColumnName = "id")
-    val replyToComment: Comment?,
+    val replies: List<Comment>,
 
     @OneToMany(mappedBy = "comment", cascade = [CascadeType.ALL], orphanRemoval = true)
     val likes: List<CommentLikes>,
 
     @Column(insertable = false, updatable = false)
-    val createdAt: String
+    val createdAt: String,
+
+    @Column(insertable = false, updatable = false)
+    val updatedAt: String
 )
