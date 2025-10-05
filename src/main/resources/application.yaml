@@ -15,11 +15,17 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: email@email.com
-    password: senha-app
+    username: ${NOREPLY_EMAIL_URL}
+    password: ${NOREPLY_EMAIL_PASSWORD}
     properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
+            required: true
+          ssl:
+            trust: smtp.gmail.com
   servlet:
     multipart:
       max-file-size: 50MB
@@ -27,8 +33,8 @@ spring:
 project:
   dailyiu:
     support:
-      email: suporte.daily.iu@gmail.com
-      noreply: noreply.daily.iu@gmail.com
+      email: ${SUPPORT_EMAIL_URL}
+      noreply: ${NOREPLY_EMAIL_URL}
     azure:
       storage:
         connection-string: ${AZURE_STORAGE_CONNECTION_STRING}

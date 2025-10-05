@@ -16,9 +16,9 @@ class User (
     @JoinColumn(name = "patientProfileId", referencedColumnName = "id")
     val profile: PatientProfile,
 
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "credentialId", referencedColumnName = "id")
-    val credential: Credential,
+    var credential: Credential,
 
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "preferencesId", referencedColumnName = "id")
