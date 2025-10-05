@@ -31,6 +31,11 @@ spring:
       max-file-size: 50MB
       max-request-size: 500MB
 project:
+  info:
+    app:
+        name: @project.name@
+        description: @project.description@
+        version: @project.version@
   dailyiu:
     support:
       email: ${SUPPORT_EMAIL_URL}
