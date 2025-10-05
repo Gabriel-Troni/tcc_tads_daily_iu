@@ -48,6 +48,16 @@ CREATE TABLE appUser (
 );
 GO
 
+CREATE TABLE OTP (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    userId BIGINT NOT NULL,
+    code NVARCHAR(255) NOT NULL,
+    expirationTime BIGINT NOT NULL,
+    used BIT NOT NULL DEFAULT 0
+    FOREIGN KEY (userId) REFERENCES appUser(id)
+);
+GO
+
 --//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 
 -- Tabela principal de questões com campos adicionais

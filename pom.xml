@@ -13,7 +13,7 @@
     <artifactId>daily-iu-services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>daily-iu-services</name>
-    <description>Demo project for Spring Boot</description>
+    <description>API de serviços para o projeto Daily IU</description>
 
     <developers>
         <developer>
@@ -29,6 +29,10 @@
             <organization>UFPR</organization>
         </developer>
         <developer>
+            <name>Pedro Henrique Souza</name>
+            <organization>UFPR</organization>
+        </developer>
+        <developer>
             <name>Raul Ferreira Bana</name>
             <organization>UFPR</organization>
         </developer>
@@ -39,7 +43,7 @@
         <kotlin.version>1.9.25</kotlin.version>
         <org.springframework-version>6.2.10</org.springframework-version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
-        <test.coverage.exclusions>**/config/**,**/dto/**,**/exception/**,**/DailyIuServicesApplication.*</test.coverage.exclusions>
+        <test.coverage.exclusions>**/config/**,**/dto/**,**/entity/**,**/exception/**,**/DailyIuServicesApplication.*</test.coverage.exclusions>
     </properties>
 
     <dependencies>

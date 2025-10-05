@@ -1,3 +1,5 @@
+DROP ALL OBJECTS;
+
 CREATE TABLE IF NOT EXISTS credential (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     passwordHash VARCHAR(255) NOT NULL,
@@ -87,10 +89,9 @@ CREATE TABLE IF NOT EXISTS urinationData (
 CREATE TABLE IF NOT EXISTS media (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     url VARCHAR(255) NOT NULL,
-    type VARCHAR(10) NOT NULL,
-    description VARCHAR(1000),
+    contentType VARCHAR(10) NOT NULL,
+    contentSize BIGINT NOT NULL,
     altText VARCHAR(255) NOT NULL,
-    caption VARCHAR(255) DEFAULT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
 
@@ -127,30 +128,25 @@ CREATE TABLE IF NOT EXISTS contentCategory (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     description VARCHAR(255),
-    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
-);
-
-CREATE TABLE IF NOT EXISTS contentTag (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description VARCHAR(255),
+    auditable BOOLEAN NOT NULL DEFAULT FALSE,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
 
 CREATE TABLE IF NOT EXISTS content (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    description VARCHAR(10000),
+    description VARCHAR(10000) NOT NULL,
+    subtitle VARCHAR(255),
+    subContent VARCHAR(10000),
     categoryId INT NOT NULL,
-    coverMediaId BIGINT,
     authorId BIGINT,
     repost BOOLEAN NOT NULL DEFAULT FALSE,
     repostFromcontentId BIGINT DEFAULT NULL,
     repostByAuthorId BIGINT DEFAULT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    FOREIGN KEY (coverMediaId) REFERENCES media(id),
     FOREIGN KEY (authorId) REFERENCES appUser(id),
+    FOREIGN KEY (repostByAuthorId) REFERENCES appUser(id),
     FOREIGN KEY (categoryId) REFERENCES contentCategory(id)
 );
 
@@ -162,8 +158,10 @@ CREATE TABLE IF NOT EXISTS comment (
     reply BOOLEAN NOT NULL DEFAULT FALSE,
     replyToCommentId BIGINT DEFAULT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     FOREIGN KEY (contentId) REFERENCES content(id),
-    FOREIGN KEY (authorId) REFERENCES appUser(id)
+    FOREIGN KEY (authorId) REFERENCES appUser(id),
+    FOREIGN KEY (replyToCommentId) REFERENCES comment(id)
 );
 
 CREATE TABLE IF NOT EXISTS contentLikes (
@@ -188,12 +186,4 @@ CREATE TABLE IF NOT EXISTS contentMedia (
     mediaId BIGINT NOT NULL,
     FOREIGN KEY (contentId) REFERENCES content(id),
     FOREIGN KEY (mediaId) REFERENCES media(id)
-);
-
-CREATE TABLE IF NOT EXISTS contentTagRelation (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    contentId BIGINT NOT NULL,
-    tagId INT NOT NULL,
-    FOREIGN KEY (contentId) REFERENCES content(id),
-    FOREIGN KEY (tagId) REFERENCES contentTag(id)
 );

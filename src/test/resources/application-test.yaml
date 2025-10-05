@@ -31,3 +31,10 @@ project:
     support:
       email: suporte@localhost.com
       noreply: noreply@localhost.com
+    azure:
+      storage:
+        connection-string: AccountName=mockstoreaccount;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/mockstoreaccount;
+        container-name: mock-container
+    security:
+      token:
+        secret: mock-secret-key

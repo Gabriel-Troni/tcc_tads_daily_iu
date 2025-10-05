@@ -1,6 +1,7 @@
 package br.ufpr.tads.daily_iu_services.domain.service
 
 import br.ufpr.tads.daily_iu_services.adapter.input.media.dto.MediaCreateDTO
+import br.ufpr.tads.daily_iu_services.adapter.output.media.AzureBSClient
 import com.azure.storage.blob.BlobContainerClient
 import com.azure.storage.blob.BlobServiceClient
 import com.azure.storage.blob.BlobServiceClientBuilder
@@ -12,30 +13,7 @@ import java.util.Locale
 import java.util.UUID
 
 @Service
-class MediaService {
-
-    @Value("\${project.dailyiu.azure.storage.connection-string}")
-    private lateinit var connectionString: String
-
-    @Value("\${project.dailyiu.azure.storage.container-name}")
-    private lateinit var containerName: String
-
-    private lateinit var containerClient: BlobContainerClient
-
-    private fun getBlobContainerClient(): BlobContainerClient {
-        if (!::containerClient.isInitialized) {
-            val blobServiceClient: BlobServiceClient = BlobServiceClientBuilder()
-                .connectionString(connectionString)
-                .buildClient()
-
-            // Cria o container se não existir
-            containerClient = blobServiceClient.getBlobContainerClient(containerName)
-            if (!containerClient.exists()) {
-                containerClient.create()
-            }
-        }
-        return containerClient
-    }
+class MediaService(private val azureClient: AzureBSClient) {
 
     /**
      * Faz upload de arquivos para o Azure Blob Storage
@@ -52,13 +30,8 @@ class MediaService {
             val extension = getFileExtension(originalFilename)
             val uniqueFilename = "${UUID.randomUUID()}.$extension"
 
-            try {
-                val blobClient = getBlobContainerClient().getBlobClient(uniqueFilename)
-                blobClient.upload(file.inputStream, file.size, true)
-                media.add(MediaCreateDTO(blobClient.blobUrl, file.contentType, file.size))
-            } catch (e: IOException) {
-                throw RuntimeException("Falha ao fazer upload do arquivo $originalFilename", e)
-            }
+            val blobUrl = azureClient.upload(file, uniqueFilename, originalFilename)
+            media.add(MediaCreateDTO(blobUrl, file.contentType, file.size))
         }
 
         return media

@@ -1,10 +1,3 @@
--- Limpando tabelas para evitar conflitos
-DELETE FROM urinationData;
-DELETE FROM calendarDay;
-DELETE FROM questionOption;
-DELETE FROM question;
-DELETE FROM appUser;
-
 -- Inserindo as questões
 INSERT INTO question (externalId, text, type, required, placeholder, minValue, maxValue, step) VALUES
 ('birthdate', 'Qual sua data de nascimento?',
@@ -65,8 +58,8 @@ INSERT INTO questionOption (questionId, label, textValue) VALUES
 
 -- Inserindo dados de teste para usuários e diário miccional
 INSERT INTO credential (passwordHash, salt) VALUES
-('hash1', 'salt1'),
-('hash2', 'salt2');
+('1thzHtxdZlMY1Eyy90PCHNPUkbetaYCC8JjWIAgmxvo=', 'DghbE3gLRofkyVuZZ37oQA=='),
+('z943fyO/J1bjRnoXt7Segm2h2c6e6tuS/bHMlSCPZJs=', '1HCmqwTC12DzqNpVKdQ0Uw==');
 
 INSERT INTO patientProfile (birthDate, gender) VALUES
 ('1980-05-15', 'M'),
@@ -79,7 +72,7 @@ INSERT INTO preferences (highContrast, bigFont, reminderCalendar, reminderCalend
 -- Inserindo usuários
 INSERT INTO appUser (name, email, credentialId, patientProfileId, preferencesId) VALUES
 ('Usuário 1', 'usuario1@example.com', 1, 1, 1),
-('Usuário 2', 'usuario2@example.com', 2, 2, 2);
+('Usuária 2', 'usuario2@example.com', 2, 2, 2);
 
 --//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 
@@ -95,11 +88,11 @@ INSERT INTO calendarDay (dateValue, userId, leakageLevel, eventsCount, completed
 ('2025-08-03', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'HIGH', 1, 0, 'Vazamento após café.', 'dom'),
 ('2025-08-10', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'NONE', 1, 1, NULL, 'dom'),
 ('2025-08-20', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'LOW', 1, 2, 'Pouca urgência.', 'qua'),
-('2025-06-03', (SELECT id FROM appUser WHERE name = 'Usuário 2'), 'MEDIUM', 1, 1, 'Dia normal.', 'ter'),
-('2025-07-05', (SELECT id FROM appUser WHERE name = 'Usuário 2'), 'HIGH', 1, 2, 'Vazamento noturno.', 'sab'),
-('2025-07-18', (SELECT id FROM appUser WHERE name = 'Usuário 2'), 'NONE', 0, 1, NULL, 'sex'),
-('2025-08-07', (SELECT id FROM appUser WHERE name = 'Usuário 2'), 'LOW', 1, 2, 'Pouca urgência.', 'qui'),
-('2025-08-22', (SELECT id FROM appUser WHERE name = 'Usuário 2'), 'MEDIUM', 1, 0, NULL, 'sex'),
+('2025-06-03', (SELECT id FROM appUser WHERE name = 'Usuária 2'), 'MEDIUM', 1, 1, 'Dia normal.', 'ter'),
+('2025-07-05', (SELECT id FROM appUser WHERE name = 'Usuária 2'), 'HIGH', 1, 2, 'Vazamento noturno.', 'sab'),
+('2025-07-18', (SELECT id FROM appUser WHERE name = 'Usuária 2'), 'NONE', 0, 1, NULL, 'sex'),
+('2025-08-07', (SELECT id FROM appUser WHERE name = 'Usuária 2'), 'LOW', 1, 2, 'Pouca urgência.', 'qui'),
+('2025-08-22', (SELECT id FROM appUser WHERE name = 'Usuária 2'), 'MEDIUM', 1, 0, NULL, 'sex'),
 ('2025-09-02', (SELECT id FROM appUser WHERE name = 'Usuário 1'), 'LOW', 1, 1, 'Dia tranquilo.', 'ter');
 
 -- Inserindo dados de urinação
@@ -113,8 +106,62 @@ INSERT INTO urinationData (calendarDayId, timeValue, amount, leakage, reason, ur
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-08-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '08:45', 'HIGH', TRUE, 'Café da manhã', TRUE),
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-08-10' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '11:00', 'NONE', FALSE, NULL, FALSE),
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-08-20' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '14:30', 'LOW', FALSE, 'Almoço', FALSE),
-((SELECT id FROM calendarDay WHERE dateValue = '2025-06-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '09:30', 'MEDIUM', TRUE, 'Trabalho', TRUE),
-((SELECT id FROM calendarDay WHERE dateValue = '2025-07-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '22:00', 'HIGH', TRUE, 'Sono profundo', TRUE),
-((SELECT id FROM calendarDay WHERE dateValue = '2025-08-07' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '13:00', 'LOW', FALSE, 'Almoço', FALSE),
-((SELECT id FROM calendarDay WHERE dateValue = '2025-08-22' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 2')), '16:45', 'MEDIUM', TRUE, 'Trânsito', TRUE),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-06-03' AND userId = (SELECT id FROM appUser WHERE name = 'Usuária 2')), '09:30', 'MEDIUM', TRUE, 'Trabalho', TRUE),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-07-05' AND userId = (SELECT id FROM appUser WHERE name = 'Usuária 2')), '22:00', 'HIGH', TRUE, 'Sono profundo', TRUE),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-07' AND userId = (SELECT id FROM appUser WHERE name = 'Usuária 2')), '13:00', 'LOW', FALSE, 'Almoço', FALSE),
+((SELECT id FROM calendarDay WHERE dateValue = '2025-08-22' AND userId = (SELECT id FROM appUser WHERE name = 'Usuária 2')), '16:45', 'MEDIUM', TRUE, 'Trânsito', TRUE),
 ((SELECT id FROM calendarDay WHERE dateValue = '2025-09-02' AND userId = (SELECT id FROM appUser WHERE name = 'Usuário 1')), '18:42', 'LOW', FALSE, 'Cafézinho da tarde', FALSE);
+
+--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
+
+-- Inserindo dados da rede social
+
+INSERT INTO contentCategory (name, description, auditable) VALUES
+('Alimentação e Nutrição', 'Dicas de alimentos que ajudam na saúde do trato urinário, receitas funcionais, e orientações nutricionais.', FALSE),
+('Hábitos Saudáveis', 'Rotinas que favorecem o bem-estar, como exercícios físicos, sono, hidratação e autocuidado.', FALSE),
+('Dicas de Fisioterapia Pélvica', 'Conteúdos educativos sobre exercícios, técnicas e orientações fisioterapêuticas.', TRUE),
+('Depoimentos e Histórias Reais', 'Espaço para relatos de superação, experiências com tratamentos e apoio emocional.', FALSE),
+('Mitos e Verdades', 'Desmistificação de crenças populares sobre incontinência urinária e saúde íntima.', TRUE),
+('Profissionais Respondem', 'Sessão para perguntas e respostas com especialistas (fisioterapeutas, nutricionistas, médicos).', TRUE);
+
+INSERT INTO content (title, description, subtitle, subContent, categoryId, authorId, repost) VALUES
+('Receita funcional para o café da manhã', 'Comece o dia com uma panqueca de banana e aveia batida com um fio de mel e canela, assada em frigideira antiaderente. Rica em fibras solúveis, ajuda a regular o intestino e reduzir o esforço que pressiona a bexiga. Evite adoçar em excesso e prefira leite vegetal se houver sensibilidade. Combine com uma porção de iogurte natural para proteína.', 'Benefícios para o trato urinário', 'A fibra solúvel da aveia auxilia no trânsito intestinal, diminuindo constipação e a pressão abdominal que pode agravar episódios de escape.', 1, 1, FALSE),
+('Exercício respiratório para relaxar o assoalho pélvico', 'A prática da respiração diafragmática reduz a tensão involuntária dos músculos do assoalho pélvico e melhora o controle neuromuscular. Deite-se com as mãos sobre o abdome, inspire contando até quatro e sinta o diafragma descendo; expire lentamente contando até seis, permitindo que o períneo relaxe. Repita por 5 a 10 minutos, duas vezes ao dia, especialmente após atividades que geram esforço. Integre esses exercícios a uma rotina de alongamento suave.', 'Ponto de atenção', 'Se houver dor ou aumento dos sintomas, interrompa e consulte um fisioterapeuta especializado.', 3, 1, FALSE),
+('Minha jornada pós-parto com incontinência', 'Após o segundo parto experimentei escapes ao espirrar e ao correr; inicialmente ignorei por vergonha, até perceber que afetava minha rotina social. Procurei atendimento fisioterapêutico, aprendi a identificar e contrair corretamente o assoalho pélvico e passei a fortalecer o core com exercícios graduais. Em três meses notei redução dos episódios e mais confiança para voltar a atividades físicas. A troca de experiências com outras mães foi fundamental para manter a motivação.', null, null, 4, 2, FALSE),
+('Mito: só quem teve filhos sofre com incontinência', 'A incontinência urinária não é exclusiva de quem já teve filhos; ela pode surgir por diversos motivos em diferentes faixas etárias. Problemas neurológicos, obesidade, cirurgia pélvica, alterações hormonais e predisposição genética são fatores que aumentam o risco. Identificar o tipo de incontinência é essencial para direcionar o tratamento adequado e eficaz. Informação correta evita estigmas e promove busca precoce por ajuda.', 'Fatores de risco', 'Sedentarismo, excesso de peso, tabagismo e constipação crônica aumentam a probabilidade de desenvolver sintomas.', 5, 1, FALSE),
+('Desafio: 10 minutos de autocuidado por dia', 'Reserve 10 minutos diários para práticas simples: alongamento leve, respiração guiada, hidratação consciente e registro rápido de humor. Pequenos hábitos acumulam efeito na redução do estresse, melhoram o sono e ajudam no controle muscular do períneo ao longo do tempo. Documente os progressos na comunidade para manter a responsabilidade e inspirar outras pessoas. Experimente variar a atividade a cada dia para manter o engajamento.', null, null, 2, 2, FALSE),
+('Posso fazer pilates com incontinência?', 'Sim, pilates pode ser uma ferramenta eficaz quando adaptado às necessidades de quem tem incontinência; o foco é na ativação controlada do core e no equilíbrio da pressão intra-abdominal. Instrutores com formação em saúde da mulher devem priorizar exercícios com respiração coordenada e evitar movimentos que gerem esforço abrupto sem suporte muscular. Comece com sessões individuais ou em pequenos grupos até ganhar controle e segurança. Monitore sintomas e ajuste progressão conforme orientação profissional.', 'Dicas para praticar com segurança', 'Procure profissionais que realizem avaliação inicial do assoalho pélvico e ofereçam progressão personalizada.', 6, 1, FALSE);
+
+INSERT INTO media (url, contentType, contentSize, altText) VALUES
+('http://127.0.0.1:10000/devstoreaccount1/media/91b2247e-070f-4668-8d1f-11063629811a.jpg', 'image/jpeg', 107015, 'Porção de panquecas de banana e aveia com mel e canela em um prato branco sobre uma mesa de madeira clara.'),
+('http://127.0.0.1:10000/devstoreaccount1/media/ffd6af37-eab6-49d2-8276-36f13252617f.png', 'image/png', 420209, 'Ilustração de uma mulher sentada em uma cadeira, com as mãos sobre o abdome, demonstrando a respiração diafragmática.'),
+('http://127.0.0.1:10000/devstoreaccount1/media/3467b840-3aa0-4fe9-b8fb-2dcc7bbea020.png', 'image/png', 1405504, 'Foto de uma mulher sentada em uma poltrona, com seu bebê no colo e expressão de cansaço e mão sobre a testa.'),
+('http://127.0.0.1:10000/devstoreaccount1/media/80e5d0be-4516-4a65-b5da-967fdd8823c9.jpg', 'image/jpeg', 158010, 'Foto de uma mulher serena, com os olhos fechados e expressão tranquila, em um ambiente claro com seu bebê no colo, enrolado em um cobertor.'),
+('http://127.0.0.1:10000/devstoreaccount1/media/573aa04e-716d-4c74-b009-3b83f10e3834.jpg', 'image/jpeg', 63847, 'Ilustração de uma mulher no campo em posição de meditação, acima de sua cabeça flutuam ícones representando autocuidado, como um coração, livros e pesos de academia.'),
+('http://127.0.0.1:10000/devstoreaccount1/media/79964e42-cb11-4b4a-9c49-2a9687bcef9b.png', 'image/png', 938243, 'Foto de uma mulher praticando pilates em um estúdio, sentada em cima do joelho, alongando a parte lateral do corpo com os dois braços estendidos para cima.');
+
+INSERT INTO contentMedia (contentId, mediaId) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6);
+
+INSERT INTO comment (contentId, authorId, text) VALUES
+(1, 2, 'Adorei a receita! Vou testar no café da manhã de amanhã.'),
+(2, 1, 'Exercício simples e eficaz. Já sinto mais relaxamento.'),
+(3, 2, 'Obrigada por compartilhar sua história. Me identifiquei muito!'),
+(4, 1, 'Muito bom desmistificar esses mitos. Informação é tudo!'),
+(5, 2, 'Ótimo desafio! Já estou incorporando na minha rotina diária.'),
+(6, 1, 'Pilates tem sido ótimo para meu controle. Recomendo buscar bons instrutores.');
+
+INSERT INTO contentLikes (contentId, userId) VALUES
+(1, 2),
+(2, 1),
+(3, 2),
+(4, 1),
+(5, 2),
+(6, 1),
+(1, 1),
+(2, 2);
