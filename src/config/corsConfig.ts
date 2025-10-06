@@ -16,7 +16,6 @@ export function getCorsOptions(path: string): CorsOptions {
     throw new Error(`CORS não configurado para o caminho: ${path}`);
   }
 
-  console.log(match.config.methods)
   return {
     origin: [env.FRONTEND_URL],
     methods: match.config.methods,

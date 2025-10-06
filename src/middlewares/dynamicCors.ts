@@ -15,7 +15,6 @@ export const dynamicCors = (req: Request, res: Response, next: NextFunction) => 
 
     cors(corsOptions)(req, res, next);
   } catch (error) {
-    console.error(`Erro ao configurar CORS: ${error}`);
     res.status(403).json({
       message: "Erro ao configurar CORS",
       error: error instanceof Error ? error.message : String(error),
