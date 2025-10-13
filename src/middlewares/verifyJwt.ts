@@ -1,0 +1,32 @@
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken"
+import { env } from "../utils/getEnv";
+import { UserToken } from "../types/UserToken";
+import { Profile } from "../types/ProfileEnum";
+
+export const verifyJwt = (allowedProfiles: Profile[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+        const token = req.headers['authorization']
+
+        if (!token) {
+            return res.status(401).json({ message: 'Token não fornecido.' })
+        }
+
+        try {
+            const decoded = jwt.verify(token, env.SECRET_KEY) as UserToken
+            req.userToken = decoded
+
+            if (allowedProfiles.length && !allowedProfiles.includes(decoded?.profile)) {
+                return res.status(403).json({ message: 'Você não possui permissão para realizar esta operação.' })
+            }
+
+            next()
+        } catch (err: any) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: 'Sessão expirada. Faça login novamente.' });
+            }
+
+            return res.status(401).json({ message: 'Token inválido.' });
+        }
+    }
+}

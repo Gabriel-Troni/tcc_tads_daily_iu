@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import axios from "axios";
 
-export function globalErrorHandler(
+export const globalErrorHandler = (
   err: any,
   _req: Request,
   res: Response,
   _next: NextFunction
-) {
+) => {
   let status = 500;
   let message = 'Erro interno do servidor';
 
