@@ -4,8 +4,11 @@ interface RouteCorsConfig {
 
 export const corsMappings: Record<string, RouteCorsConfig> = {
   // Admin
-  "/admin/users/role": { methods: ["POST"] },
   "/admin/users": { methods: ["GET"] },
+  "/admin/users/role": { methods: ["POST"] },
+  "/admin/reports/strike": { methods: ["POST"] },
+  "/admin/reports/validate": { methods: ["POST"] },
+  "/admin/reports": { methods: ["GET"] },
 
   // Auth
   "/login": { methods: ["POST"] },

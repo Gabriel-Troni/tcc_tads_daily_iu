@@ -27,7 +27,7 @@ app.use(limiter)
 app.use(validateBaseUrl)
 app.use(env.BASE_URL, dynamicCors)
 
-app.use(`${env.BASE_URL}/admin/users`, adminRouter)
+app.use(`${env.BASE_URL}/admin`, adminRouter)
 app.use(`${env.BASE_URL}/exercise`, exerciseRouter)
 app.use(`${env.BASE_URL}/preferences`, preferencesRouter)
 app.use(`${env.BASE_URL}/calendar`, diaryRouter)
@@ -39,6 +39,10 @@ app.use(`${env.BASE_URL}/users`, usersRoutes)
 app.use(`${env.BASE_URL}/content/comments`, commentsRouter)
 app.use(`${env.BASE_URL}/content`, contentRouter)
 app.use(`${env.BASE_URL}/media`, mediaRouter)
+
+// TODO: exercicios router = alguns tirar verifyJWT -> usuario nao logado
+
+//verificar se o corsMappings realmente é necessário
 
 app.use(globalErrorHandler)
 

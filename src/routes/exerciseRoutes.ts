@@ -9,7 +9,7 @@ exerciseRouter.put("/workout/plan/:id", verifyJwt([Profile.ADMIN]), ExerciseCont
 exerciseRouter.put("/workout/:id", verifyJwt([Profile.ADMIN]), ExerciseController.setTraining)
 exerciseRouter.put("/:id", verifyJwt([Profile.ADMIN]), ExerciseController.setExercise)
 
-exerciseRouter.post("/workout/completion", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ExerciseController.completeTraining)
+exerciseRouter.post("/workout/completion", ExerciseController.completeTraining)
 exerciseRouter.post("/workout/feedback", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ExerciseController.feedbackTraining)
 exerciseRouter.post("/workout/plan", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ExerciseController.addTrainingPlan)
 

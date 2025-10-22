@@ -5,7 +5,10 @@ import { AdminController } from "../controllers/AdminController";
 
 const adminRouter = Router()
 
-adminRouter.post("/role", verifyJwt([Profile.ADMIN]), AdminController.setRole)
-adminRouter.get("/", verifyJwt([Profile.ADMIN]), AdminController.getUsers)
+adminRouter.get("/users", verifyJwt([Profile.ADMIN]), AdminController.getUsers)
+adminRouter.get("/reports", verifyJwt([Profile.ADMIN]), AdminController.getComplaintsReport)
+adminRouter.post("/users/role", verifyJwt([Profile.ADMIN]), AdminController.setRole)
+adminRouter.post("/reports/validate", verifyJwt([Profile.ADMIN]), AdminController.validateComplaint)
+adminRouter.post("/reports/strike", verifyJwt([Profile.ADMIN]), AdminController.strikeUser)
 
 export { adminRouter }
