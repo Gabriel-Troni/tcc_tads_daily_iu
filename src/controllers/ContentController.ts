@@ -9,6 +9,10 @@ export class ContentController {
     return res.status(200).json({ funcionando: 'sim' });
   }
 
+  static async getSavedContent(req: Request, res: Response) {
+    return res.status(200).json({ funcionando: 'sim' });
+  }
+
   static async repostContent(req: Request, res: Response) {
     return res.status(200).json({ funcionando: 'sim' });
   }
@@ -21,7 +25,7 @@ export class ContentController {
     return res.status(200).json({ funcionando: 'sim' });
   }
 
-  static async toggleFavorite(req: Request, res: Response) {
+  static async toggleSaved(req: Request, res: Response) {
     return res.status(200).json({ funcionando: 'sim' });
   }
 

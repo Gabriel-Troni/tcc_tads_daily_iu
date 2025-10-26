@@ -8,6 +8,18 @@ export class UserController {
       return res.status(response.status).json(response.data)
   }
 
+  static async getTrainingPlan(req: Request, res: Response) {
+      return res.status(200).json({ funcionando: 'sim' });
+  }
+
+  static async completeTraining(req: Request, res: Response) {
+      return res.status(200).json({ funcionando: 'sim' });
+  }
+
+  static async feedbackTraining(req: Request, res: Response) {
+      return res.status(200).json({ funcionando: 'sim' });
+  }
+
   static async addUser(req: Request, res: Response) {
       return res.status(200).json({ funcionando: 'sim' });
   }

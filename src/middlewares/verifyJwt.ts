@@ -14,12 +14,12 @@ export const verifyJwt = (allowedProfiles: Profile[]) => {
 
         try {
             const decoded = jwt.verify(token, env.SECRET_KEY) as UserToken
-            req.userToken = decoded
-
-            if (allowedProfiles.length && !allowedProfiles.includes(decoded?.profile)) {
-                return res.status(403).json({ message: 'Você não possui permissão para realizar esta operação.' })
+            
+            if (allowedProfiles.length && !allowedProfiles.includes(decoded.profile)) {
+                    return res.status(403).json({ message: 'Você não possui permissão para realizar esta operação.' })
             }
 
+            req.userId = decoded.sub
             next()
         } catch (err: any) {
             if (err.name === 'TokenExpiredError') {
