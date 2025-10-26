@@ -16,11 +16,11 @@ export const globalErrorHandler = (
       message = "Backend indisponível";
     } else {
       status = err.response?.status || 500;
-      message = err.response?.data?.error || message;
+      message = err.response?.data?.message || message;
     }
   } else if (err instanceof Error) {
     message = err.message;
   }
 
-  res.status(status).json({ status, erro: message });
+  res.status(status).json({ message });
 }
