@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { CalendarController } from "../controllers/CalendarController";
 
-const calendarRouter = Router()
+const router = Router();
 
-calendarRouter.get("/", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), CalendarController.getCalendarEvents)
-calendarRouter.put("/", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), CalendarController.setCalendarEvent)
+router.get('/', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), CalendarController.getCalendarEvents);
+router.put('/', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), CalendarController.setCalendarEvent);
 
-export { calendarRouter }
+export default router;

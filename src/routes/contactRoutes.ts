@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { ContactController } from "../controllers/ContactController";
 
-const contactRouter = Router()
+const router = Router();
 
-contactRouter.post("/support", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ContactController.requestSupport)
-contactRouter.post("/professional-request", verifyJwt([Profile.USER]), ContactController.requestProfessionalProfile)
+router.post('/support', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ContactController.requestSupport);
+router.post('/professional-request', validateJwt([Profile.USER]), ContactController.requestProfessionalProfile);
 
-export { contactRouter }
+export default router;

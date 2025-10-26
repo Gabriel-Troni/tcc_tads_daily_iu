@@ -1,20 +1,20 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { UserController } from "../controllers/UserController";
 
-const usersRoutes = Router()
+const router = Router();
 
-usersRoutes.get("/:id", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.getUser)
-usersRoutes.get("/workout/plan", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.getTrainingPlan)
+router.get('/:id', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.getUser);
+router.get('/workout/plan', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.getTrainingPlan);
 
-usersRoutes.put("/", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.setUser)
+router.post('/login', UserController.login);
+router.post('/password/reset', UserController.resetPassword);
+router.post('/password/forgot', UserController.forgotPassword);
+router.post('/workout/feedback', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.feedbackTraining);
+router.post('/workout/completion', UserController.completeTraining);
+router.post('/', UserController.addUser);
 
-usersRoutes.post("/login", UserController.login)
-usersRoutes.post("/password/reset", UserController.resetPassword)
-usersRoutes.post("/password/forgot", UserController.forgotPassword)
-usersRoutes.post("/workout/feedback", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.feedbackTraining)
-usersRoutes.post("/workout/completion", UserController.completeTraining)
-usersRoutes.post("/", UserController.addUser)
+router.put('/', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), UserController.setUser);
 
-export { usersRoutes }
+export default router;

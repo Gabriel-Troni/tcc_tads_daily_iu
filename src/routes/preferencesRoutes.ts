@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { PreferencesController } from "../controllers/PreferencesController";
 
-const preferencesRouter = Router()
+const router = Router();
 
-preferencesRouter.get("/notifications", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.getNotificationsPreferences)
-preferencesRouter.get("/accessibility", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.getAccessibilityPreferences)
+router.get('/notifications', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.getNotificationsPreferences);
+router.get('/accessibility', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.getAccessibilityPreferences);
 
-preferencesRouter.patch("/notifications", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.setNotificationsPreferences)
-preferencesRouter.patch("/accessibility", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.setAccessibilityPreferences)
+router.patch('/notifications', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.setNotificationsPreferences);
+router.patch('/accessibility', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), PreferencesController.setAccessibilityPreferences);
 
-export { preferencesRouter }
+export default router;

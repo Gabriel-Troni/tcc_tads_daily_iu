@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { MediaController } from "../controllers/MediaController";
 
-const mediaRouter = Router()
+const router = Router();
 
-mediaRouter.post("/upload", verifyJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), MediaController.addMedia)
+router.post('/upload', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), MediaController.addMedia);
 
-export { mediaRouter }
+export default router;

@@ -4,7 +4,7 @@ import { env } from "../utils/getEnv";
 import { UserToken } from "../types/UserToken";
 import { Profile } from "../types/ProfileEnum";
 
-export const verifyJwt = (allowedProfiles: Profile[]) => {
+export const validateJwt = (allowedProfiles: Profile[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']
 

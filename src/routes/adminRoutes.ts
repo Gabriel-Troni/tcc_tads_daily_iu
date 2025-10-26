@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { verifyJwt } from "../middlewares/verifyJwt";
+import { validateJwt } from "../middlewares/validateJwt";
 import { Profile } from "../types/ProfileEnum";
 import { AdminController } from "../controllers/AdminController";
 
-const adminRouter = Router()
+const router = Router();
 
-adminRouter.get("/users", verifyJwt([Profile.ADMIN]), AdminController.getUsers)
-adminRouter.get("/reports", verifyJwt([Profile.ADMIN]), AdminController.getReports)
-adminRouter.post("/users/role", verifyJwt([Profile.ADMIN]), AdminController.setUserRole)
-adminRouter.post("/reports/validate", verifyJwt([Profile.ADMIN]), AdminController.validateReport)
-adminRouter.post("/reports/strike", verifyJwt([Profile.ADMIN]), AdminController.applyStrike)
+router.get('/users', validateJwt([Profile.ADMIN]), AdminController.getUsers);
+router.get('/reports', validateJwt([Profile.ADMIN]), AdminController.getReports);
+router.post('/users/role', validateJwt([Profile.ADMIN]), AdminController.setUserRole);
+router.post('/reports/validate', validateJwt([Profile.ADMIN]), AdminController.validateReport);
+router.post('/reports/strike', validateJwt([Profile.ADMIN]), AdminController.applyStrike);
 
-export { adminRouter }
+export default router;
