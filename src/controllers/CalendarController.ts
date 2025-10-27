@@ -4,9 +4,7 @@ import { env } from "../utils/getEnv";
 
 export class CalendarController {
   static async getCalendarEvents(req: Request, res: Response) {
-    const URL = `${env.BACKEND_URL}/calendar`;
-
-    const response = await axios.get(URL, {
+    const response = await axios.get(`${env.BACKEND_URL}/calendar`, {
       params: req.query,
       headers: {
         "user-id": req.userId,
@@ -16,9 +14,7 @@ export class CalendarController {
   }
 
   static async setCalendarEvent(req: Request, res: Response) {
-    const URL = `${env.BACKEND_URL}/calendar`;
-
-    const response = await axios.put(URL, req.body, {
+    const response = await axios.put(`${env.BACKEND_URL}/calendar`, req.body, {
       headers: {
         "user-id": req.userId,
       },

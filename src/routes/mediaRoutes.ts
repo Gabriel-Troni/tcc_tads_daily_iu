@@ -5,6 +5,6 @@ import { MediaController } from "../controllers/MediaController";
 
 const router = Router();
 
-router.post('/upload', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), MediaController.addMedia);
+router.post('/upload', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), MediaController.uploadMedia);
 
 export default router;

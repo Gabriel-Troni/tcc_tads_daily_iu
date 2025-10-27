@@ -1,13 +1,17 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validateJwt";
 import { Profile } from "../../types/ProfileEnum";
-import { ExerciseController } from "../../controllers/ExerciseController";
+import { WorkoutController } from "../../controllers/exercise/WorkoutController";
 
-const router = Router()
+const router = Router();
 
-router.get('/', validateJwt([Profile.ADMIN]), ExerciseController.getWorkouts)
-router.post('/', validateJwt([Profile.ADMIN]), ExerciseController.addWorkout)
-router.put('/:id', validateJwt([Profile.ADMIN]), ExerciseController.setWorkout)
-router.delete('/:id', validateJwt([Profile.ADMIN]), ExerciseController.deleteWorkout)
+router.get("/", validateJwt([Profile.ADMIN]), WorkoutController.getWorkouts);
+router.post("/", validateJwt([Profile.ADMIN]), WorkoutController.createWorkout);
+router.put("/:id", validateJwt([Profile.ADMIN]), WorkoutController.updateWorkout);
+router.delete(
+  "/:id",
+  validateJwt([Profile.ADMIN]),
+  WorkoutController.deleteWorkout
+);
 
-export default router
+export default router;

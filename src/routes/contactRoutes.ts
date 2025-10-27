@@ -5,7 +5,7 @@ import { ContactController } from "../controllers/ContactController";
 
 const router = Router();
 
-router.post('/support', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ContactController.requestSupport);
-router.post('/professional-request', validateJwt([Profile.USER]), ContactController.requestProfessionalProfile);
+router.post('/support', validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]), ContactController.sendEmail);
+router.post('/professional-request', validateJwt([Profile.USER]), ContactController.sendProfessionalRequestEmail);
 
 export default router;

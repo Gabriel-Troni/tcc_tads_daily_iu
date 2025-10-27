@@ -8,7 +8,7 @@ export const globalErrorHandler = (
   _next: NextFunction
 ) => {
   let status = 500;
-  let message = 'Erro interno do servidor';
+  let message = 'Erro desconhecido';
 
   if (axios.isAxiosError(err)) {
     if (err.code === "ECONNREFUSED") {
