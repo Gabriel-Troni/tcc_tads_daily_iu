@@ -8,12 +8,12 @@ export const globalErrorHandler = (
   _next: NextFunction
 ) => {
   let status = 500;
-  let message = 'Erro desconhecido';
+  let message = 'Unknown Error';
 
   if (axios.isAxiosError(err)) {
     if (err.code === "ECONNREFUSED") {
       status = 502;
-      message = "Backend indisponível";
+      message = "Backend unavailable";
     } else {
       status = err.response?.status || 500;
       message = err.response?.data?.message || message;

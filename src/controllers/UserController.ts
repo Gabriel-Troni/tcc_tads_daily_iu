@@ -51,39 +51,41 @@ export class UserController {
 
   static async feedbackWorkout(req: Request, res: Response) {
     try {
-      console.log(req.body)
       const response = await axios.post(
         `${env.BACKEND_URL}/users/workout/feedback`,
-        req.body,
+        {},
         {
           headers: {
             "x-user-id": req.userId,
           },
         }
       );
-      console.log(response)
+      console.log(response);
       return res.status(response.status).json(response.data);
-
-    } catch (e) {
+    } catch(e) {
       console.log(e)
+      throw e
     }
   }
 
   static async forgotPassword(req: Request, res: Response) {
-    console.log(req.headers)
-    console.log(req.headers['x-user-email'])
+    console.log(req.headers);
+    console.log(req.headers["x-user-email"]);
     const response = await axios.post(
       `${env.BACKEND_URL}/users/password/forgot`,
       {},
       {
-        headers: req.headers
+        headers: req.headers,
       }
     );
     return res.status(response.status).json(response.data);
   }
 
   static async resetPassword(req: Request, res: Response) {
-    const response = await axios.post(`${env.BACKEND_URL}/users/password/reset`, req.body)
+    const response = await axios.post(
+      `${env.BACKEND_URL}/users/password/reset`,
+      req.body
+    );
     return res.status(response.status).json(response.data);
   }
 }
