@@ -7,7 +7,7 @@ import { limiter } from "./middlewares/rateLimiting";
 import router from "./routes";
 import { MediaController } from "./controllers/MediaController";
 import { validateJwt } from "./middlewares/validateJwt";
-import { Profile } from "./types/ProfileEnum";
+import { Role } from "./types/RoleEnum";
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(limiter);
 
 app.post(
   `${env.BASE_URL}/media/upload`,
-  validateJwt([Profile.ADMIN, Profile.PROFESSIONAL, Profile.USER]),
+  validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
   MediaController.uploadMedia
 );
 

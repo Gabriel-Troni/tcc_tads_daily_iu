@@ -1,27 +1,27 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validateJwt";
-import { Profile } from "../../types/ProfileEnum";
+import { Role } from "../../types/RoleEnum";
 import { ExerciseCategoryController } from "../../controllers/exercise/ExerciseCategoryController";
 const router = Router();
 
 router.get(
   "/",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseCategoryController.getCategories
 );
 router.post(
   "/",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseCategoryController.createCategory
 );
 router.put(
   "/:id",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseCategoryController.updateCategory
 );
 router.delete(
   "/:id",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseCategoryController.deleteCategory
 );
 

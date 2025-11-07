@@ -22,5 +22,6 @@ export const globalErrorHandler = (
     message = err.message;
   }
 
+  console.error(status, message)
   res.status(status).json({ message });
 }

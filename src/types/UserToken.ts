@@ -1,6 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
-import { Profile } from "./ProfileEnum";
+import { Role } from "./RoleEnum";
 
 export interface UserToken extends JwtPayload {
-  profile: Profile
+  profile: Role;
 }

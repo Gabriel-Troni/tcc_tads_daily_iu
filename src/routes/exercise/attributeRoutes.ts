@@ -1,20 +1,28 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validateJwt";
-import { Profile } from "../../types/ProfileEnum";
+import { Role } from "../../types/RoleEnum";
 import { ExerciseAttributeController } from "../../controllers/exercise/ExerciseAttributeController";
 
 const router = Router();
 
-router.get("/", validateJwt([Profile.ADMIN]), ExerciseAttributeController.getAttributes);
-router.post("/", validateJwt([Profile.ADMIN]), ExerciseAttributeController.createAttribute);
+router.get(
+  "/",
+  validateJwt([Role.ADMIN]),
+  ExerciseAttributeController.getAttributes
+);
+router.post(
+  "/",
+  validateJwt([Role.ADMIN]),
+  ExerciseAttributeController.createAttribute
+);
 router.put(
   "/:id",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseAttributeController.updateAttribute
 );
 router.delete(
   "/:id",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   ExerciseAttributeController.deleteAttribute
 );
 

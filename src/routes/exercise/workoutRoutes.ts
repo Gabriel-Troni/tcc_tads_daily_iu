@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validateJwt";
-import { Profile } from "../../types/ProfileEnum";
+import { Role } from "../../types/RoleEnum";
 import { WorkoutController } from "../../controllers/exercise/WorkoutController";
 
 const router = Router();
 
-router.get("/", validateJwt([Profile.ADMIN]), WorkoutController.getWorkouts);
-router.post("/", validateJwt([Profile.ADMIN]), WorkoutController.createWorkout);
-router.put("/:id", validateJwt([Profile.ADMIN]), WorkoutController.updateWorkout);
+router.get("/", validateJwt([Role.ADMIN]), WorkoutController.getWorkouts);
+router.post("/", validateJwt([Role.ADMIN]), WorkoutController.createWorkout);
+router.put(
+  "/:id",
+  validateJwt([Role.ADMIN]),
+  WorkoutController.updateWorkout
+);
 router.delete(
   "/:id",
-  validateJwt([Profile.ADMIN]),
+  validateJwt([Role.ADMIN]),
   WorkoutController.deleteWorkout
 );
 
