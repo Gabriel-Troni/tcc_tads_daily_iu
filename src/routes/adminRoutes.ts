@@ -16,6 +16,11 @@ router.post(
   validateJwt([Role.ADMIN]),
   AdminController.setUserRole
 );
+router.patch(
+  "/users/status",
+  validateJwt([Role.ADMIN]),
+  AdminController.setUserStatus
+);
 router.post(
   "/reports/validate",
   validateJwt([Role.ADMIN]),

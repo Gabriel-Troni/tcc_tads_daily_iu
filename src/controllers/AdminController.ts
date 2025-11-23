@@ -13,7 +13,17 @@ export class AdminController {
   }
 
   static async setUserRole(req: Request, res: Response) {
+    console.log('passando pelo gateway')
     const response = await axios.post(`${env.BACKEND_URL}/admin/users/role`, req.body, {
+      headers: {
+        'x-user-id': req.userId
+      }
+    });
+    return res.status(response.status).json(response.data);
+  }
+
+  static async setUserStatus(req: Request, res: Response) {
+    const response = await axios.patch(`${env.BACKEND_URL}/admin/users/status`, req.body, {
       headers: {
         'x-user-id': req.userId
       }
