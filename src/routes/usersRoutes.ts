@@ -25,7 +25,11 @@ router.post(
   UserController.feedbackWorkout
 );
 router.post("/workout/completion", UserController.completeWorkout);
-router.post("/", UserController.addUser);
+router.post("/", (req, res, next) => {
+  if(req.headers["authorization"])
+    return validateJwt([Role.ADMIN])(req, res, next);
+  next();
+}, UserController.addUser);
 
 router.put(
   "/",

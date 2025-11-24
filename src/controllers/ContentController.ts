@@ -21,7 +21,7 @@ export class ContentController {
   static async getContents(req: Request, res: Response) {
     const response = await axios.get(`${env.BACKEND_URL}/content`, {
       headers: {
-        'x-user-id': req.userId,
+        'x-user-id': req.userId || req.headers['x-user-id'],
         'x-profile': req.headers['x-profile']
       }
     })

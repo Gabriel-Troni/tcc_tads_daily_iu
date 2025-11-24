@@ -11,6 +11,7 @@ import { Role } from "./types/RoleEnum";
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(limiter);
 
 app.post(
@@ -35,6 +36,6 @@ app.use((req, res) => {
 
 app.use(globalErrorHandler);
 
-app.listen(env.PORT, () => {
-  console.log(`Aplicação rodando na porta ${env.PORT}`);
+app.listen(3030, () => {
+  console.log(`Aplicação rodando na porta 3030`);
 });

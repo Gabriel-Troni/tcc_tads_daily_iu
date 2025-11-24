@@ -1,8 +1,6 @@
 docs
 README.md
 node_modules
-.env
-.env.*
 .git
 .gitignore
 dist

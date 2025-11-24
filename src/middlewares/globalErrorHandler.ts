@@ -9,6 +9,7 @@ export const globalErrorHandler = (
 ) => {
   let status = 500;
   let message = 'Unknown Error';
+  console.log(err);
 
   if (axios.isAxiosError(err)) {
     if (err.code === "ECONNREFUSED") {
@@ -19,9 +20,9 @@ export const globalErrorHandler = (
       message = err.response?.data?.message || message;
     }
   } else if (err instanceof Error) {
+    status = (err as any).cause || 500;
     message = err.message;
   }
 
-  console.error(status, message)
   res.status(status).json({ message });
 }

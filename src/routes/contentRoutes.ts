@@ -17,7 +17,15 @@ router.get(
 );
 router.get(
   "/",
-  validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
+  (req, res, next) => {
+    if(!req.headers["x-profile"] || req.headers["x-profile"] == 'false') {
+      return validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER])(req, res, next);
+    }
+    if(!req.headers["authorization"]) {
+      throw new Error("O token é obrigatório se x-profile for verdadeiro", { cause: 400 });
+    }
+    next();
+  },
   ContentController.getContents
 );
 
