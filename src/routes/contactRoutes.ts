@@ -7,7 +7,6 @@ const router = Router();
 
 router.post(
   "/support",
-  validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
   ContactController.sendEmail
 );
 router.post(

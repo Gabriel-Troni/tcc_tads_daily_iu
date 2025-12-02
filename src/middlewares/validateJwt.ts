@@ -6,7 +6,8 @@ import { Role } from "../types/RoleEnum";
 
 export const validateJwt = (allowedProfiles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers["authorization"]?.split(" ")[1];
+    const authHeader = req.get("Authorization");
+    const token = authHeader?.split(" ")[1];
 
     if (!token) {
       return res.status(401).json({ message: "Token não fornecido." });
