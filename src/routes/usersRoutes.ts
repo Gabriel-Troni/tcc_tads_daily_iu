@@ -32,7 +32,7 @@ router.post("/", (req, res, next) => {
 }, UserController.addUser);
 
 router.put(
-  "/",
+  "/:id",
   validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
   UserController.updateUser
 );

@@ -20,7 +20,8 @@ export class UserController {
   }
 
   static async updateUser(req: Request, res: Response) {
-    const response = await axios.put(`${env.BACKEND_URL}/users`);
+    const { id } = req.params;
+    const response = await axios.put(`${env.BACKEND_URL}/users/${id}`);
     return res.status(response.status).json(response.data);
   }
 
