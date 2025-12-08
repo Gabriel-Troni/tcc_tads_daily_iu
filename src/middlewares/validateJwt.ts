@@ -6,7 +6,7 @@ import { Role } from "../types/RoleEnum";
 
 export const validateJwt = (allowedProfiles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.get("Authorization");
+    const authHeader = req.get("Authorization") || req.get("authorization");
     const token = authHeader?.split(" ")[1];
 
     if (!token) {

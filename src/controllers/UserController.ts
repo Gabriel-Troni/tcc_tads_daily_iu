@@ -58,7 +58,7 @@ export class UserController {
   static async feedbackWorkout(req: Request, res: Response) {
     const response = await axios.post(
       `${env.BACKEND_URL}/users/workout/feedback`,
-      {},
+      req.body,
       {
         headers: {
           "x-user-id": req.userId,
