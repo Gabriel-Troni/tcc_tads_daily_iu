@@ -7,7 +7,11 @@ export class MediaController {
         method: "post",
         url: `${env.BACKEND_URL}/media/upload`,
         data: req,
-        headers: req.headers,
+        headers: {
+          'content-type': req.headers['content-type'] || '',
+          'content-length': req.headers['content-length'] || '',
+          'authorization': req.headers['authorization'] || '',
+        },
         maxBodyLength: 500 * 1024 * 1024, // 500MiB
         maxContentLength: 500 * 1024 * 1024, // 500MiB
         transformRequest: [(data) => data],

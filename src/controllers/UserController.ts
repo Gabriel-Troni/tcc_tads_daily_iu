@@ -4,7 +4,6 @@ import { env } from "../utils/getEnv";
 
 export class UserController {
   static async addUser(req: Request, res: Response) {
-    console.log(req.userId)
     const response = await axios.post(`${env.BACKEND_URL}/users`, req.body, {
       headers: {
         'x-user-id': req.userId || ''

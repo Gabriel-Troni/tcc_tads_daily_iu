@@ -13,7 +13,6 @@ export class AdminController {
   }
 
   static async setUserRole(req: Request, res: Response) {
-    console.log('passando pelo gateway')
     const response = await axios.post(`${env.BACKEND_URL}/admin/users/role`, req.body, {
       headers: {
         'x-user-id': req.userId
