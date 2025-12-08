@@ -11,6 +11,10 @@ import { Role } from "./types/RoleEnum";
 
 const app = express();
 
+app.use(validateBaseUrl);
+app.use(env.BASE_URL, validateCors);
+
+app.set("trust proxy", 1);
 app.use(limiter);
 
 app.post(
@@ -22,9 +26,6 @@ app.post(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(validateBaseUrl);
-app.use(env.BASE_URL, validateCors);
-
 app.use(env.BASE_URL, router);
 
 app.use((req, res) => {
@@ -35,6 +36,6 @@ app.use((req, res) => {
 
 app.use(globalErrorHandler);
 
-app.listen(env.PORT, () => {
-  console.log(`Aplicação rodando na porta ${env.PORT}`);
+app.listen(3030, () => {
+  console.log(`Aplicação rodando na porta 3030`);
 });

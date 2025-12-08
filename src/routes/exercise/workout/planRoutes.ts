@@ -6,22 +6,22 @@ import { WorkoutPlanController } from "../../../controllers/exercise/WorkoutPlan
 const router = Router();
 
 router.get(
-  "/plan",
+  "/",
   validateJwt([Role.ADMIN]),
   WorkoutPlanController.getWorkoutPlans
 );
 router.post(
-  "/plan",
+  "/",
   validateJwt([Role.ADMIN]),
   WorkoutPlanController.createWorkoutPlan
 );
 router.put(
-  "/plan/:id",
+  "/:id",
   validateJwt([Role.ADMIN]),
   WorkoutPlanController.updateWorkoutPlan
 );
 router.delete(
-  "/plan/:id",
+  "/:id",
   validateJwt([Role.ADMIN]),
   WorkoutPlanController.deleteWorkoutPlan
 );

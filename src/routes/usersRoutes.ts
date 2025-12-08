@@ -24,11 +24,15 @@ router.post(
   validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
   UserController.feedbackWorkout
 );
-router.post("/workout/completion", UserController.completeWorkout);
-router.post("/", UserController.addUser);
+router.post("/workout/completion", validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]), UserController.completeWorkout);
+router.post("/", (req, res, next) => {
+  if(req.headers["Authorization"])
+    return validateJwt([Role.ADMIN])(req, res, next);
+  next();
+}, UserController.addUser);
 
 router.put(
-  "/",
+  "/:id",
   validateJwt([Role.ADMIN, Role.PROFESSIONAL, Role.USER]),
   UserController.updateUser
 );

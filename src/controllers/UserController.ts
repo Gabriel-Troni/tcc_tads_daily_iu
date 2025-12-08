@@ -4,7 +4,11 @@ import { env } from "../utils/getEnv";
 
 export class UserController {
   static async addUser(req: Request, res: Response) {
-    const response = await axios.post(`${env.BACKEND_URL}/users`);
+    const response = await axios.post(`${env.BACKEND_URL}/users`, req.body, {
+      headers: {
+        'x-user-id': req.userId || ''
+      }
+    });
     return res.status(response.status).json(response.data);
   }
 
@@ -15,7 +19,8 @@ export class UserController {
   }
 
   static async updateUser(req: Request, res: Response) {
-    const response = await axios.put(`${env.BACKEND_URL}/users`);
+    const { id } = req.params;
+    const response = await axios.put(`${env.BACKEND_URL}/users/${id}`);
     return res.status(response.status).json(response.data);
   }
 
@@ -52,7 +57,7 @@ export class UserController {
   static async feedbackWorkout(req: Request, res: Response) {
     const response = await axios.post(
       `${env.BACKEND_URL}/users/workout/feedback`,
-      {},
+      req.body,
       {
         headers: {
           "x-user-id": req.userId,

@@ -4,8 +4,11 @@ import { env } from "../../utils/getEnv";
 
 export class ExerciseController {
   static async createExercise(req: Request, res: Response) {
-    const response = await axios.post(`${env.BACKEND_URL}/exercise`, req.body);
-    return res.status(response.status).json(response.data);
+    const response = await axios.post(
+        `${env.BACKEND_URL}/exercise`,
+        req.body
+      );
+      return res.status(response.status).json(response.data);
   }
 
   static async getExercises(req: Request, res: Response) {

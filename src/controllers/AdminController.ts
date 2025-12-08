@@ -21,6 +21,15 @@ export class AdminController {
     return res.status(response.status).json(response.data);
   }
 
+  static async setUserStatus(req: Request, res: Response) {
+    const response = await axios.patch(`${env.BACKEND_URL}/admin/users/status`, req.body, {
+      headers: {
+        'x-user-id': req.userId
+      }
+    });
+    return res.status(response.status).json(response.data);
+  }
+
   static async getReports(req: Request, res: Response) {
     const response = await axios.get(`${env.BACKEND_URL}/admin/reports`, {
       headers: {
