@@ -1,209 +1,343 @@
-# TCC TADS Gateway
+# Daily IU Services - Backend API
 
-API Gateway responsável por controlar o acesso a recursos do backend, fornecendo autenticação, autorização, rate limiting e roteamento de requisições.
+API REST desenvolvida em Kotlin com Spring Boot para o sistema Daily IU, uma plataforma de suporte para pessoas com incontinência urinária.
 
-## 📋 Descrição
+## 📋 Índice
 
-Este projeto é um API Gateway desenvolvido em Node.js com Express e TypeScript que atua como intermediário entre clientes (frontend/mobile) e o backend, fornecendo:
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Requisitos](#requisitos)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Executando o Projeto](#executando-o-projeto)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Documentação da API](#documentação-da-api)
+- [Testes](#testes)
+- [Desenvolvimento](#desenvolvimento)
+- [Desenvolvedores](#desenvolvedores)
 
-- **Autenticação e Autorização**: Validação de tokens JWT e controle de acesso baseado em roles
-- **Rate Limiting**: Proteção contra abuso de API
-- **CORS**: Controle de origem cruzada
-- **Roteamento**: Distribuição de requisições para o backend apropriado
-- **Validação**: Validação de rotas e parâmetros
+## 🎯 Sobre o Projeto
 
-## 🛠️ Tecnologias
+O Daily IU Services é uma API REST que fornece serviços backend para uma plataforma de suporte à saúde, focada em pessoas com incontinência urinária. A aplicação oferece funcionalidades como:
 
-- **Node.js** - Runtime JavaScript
-- **TypeScript** - Superset tipado do JavaScript
-- **Express** - Framework web para Node.js
-- **JWT (jsonwebtoken)** - Autenticação baseada em tokens
-- **Axios** - Cliente HTTP para comunicação com o backend
-- **Zod** - Validação de schemas e variáveis de ambiente
-- **CORS** - Middleware para Cross-Origin Resource Sharing
-- **express-rate-limit** - Proteção contra rate limiting
+- **Autenticação e Gerenciamento de Usuários**: Sistema de login com JWT, recuperação de senha e perfis de usuário
+- **Rede Social**: Criação, edição e interação com conteúdo (posts, comentários, curtidas)
+- **Exercícios e Treinos**: Gerenciamento de exercícios, treinos e planos de treino personalizados
+- **Calendário**: Registro e acompanhamento de eventos de micção
+- **Onboarding**: Sistema de perguntas para personalização da experiência do usuário
+- **Relatórios**: Geração de relatórios de saúde e progresso
+- **Mídia**: Armazenamento de imagens e arquivos no Azure Blob Storage
+- **Administração**: Painel administrativo para gerenciamento de usuários e conteúdo
+- **Contato e Suporte**: Sistema de envio de e-mails para suporte e solicitações profissionais
 
-## 📦 Pré-requisitos
+## 🛠 Tecnologias Utilizadas
+
+- **Linguagem**: Kotlin 1.9.25
+- **Framework**: Spring Boot 3.5.0
+- **Banco de Dados**: Microsoft SQL Server 2019
+- **Armazenamento**: Azure Blob Storage (com Azurite para desenvolvimento local)
+- **Autenticação**: JWT (JSON Web Tokens)
+- **Documentação**: Swagger/OpenAPI 3
+- **Build Tool**: Maven
+- **Containerização**: Docker e Docker Compose
+- **Testes**: JUnit 5, MockWebServer, GreenMail
+- **Validação**: Jakarta Validation
+- **Mapeamento**: MapStruct
+
+## 📦 Requisitos
 
 Antes de começar, certifique-se de ter instalado:
 
-- **Node.js** (versão 18 ou superior)
-- **npm** ou **yarn** (gerenciador de pacotes)
+- **Java 17** ou superior
+- **Maven 3.6+** (ou use o `mvnw` incluído no projeto)
+- **Docker** e **Docker Compose** (para executar a infraestrutura local)
+- **Git** (para clonar o repositório)
+
+### Verificando as Instalações
+
+```bash
+# Verificar versão do Java
+java -version
+
+# Verificar versão do Maven
+mvn -version
+
+# Verificar versão do Docker
+docker --version
+docker compose version
+```
 
 ## 🚀 Instalação
 
-1. Clone o repositório:
+1. **Clone o repositório**
+
 ```bash
-git clone https://github.com/raulbana/tcc-tads-gateway.git
-cd tcc-tads-gateway
+git clone https://github.com/raulbana/tcc-tads-backend.git
+cd tcc-tads-backend
 ```
 
-2. Instale as dependências:
-```bash
-npm install
-```
-
-ou
+2. **Compile o projeto**
 
 ```bash
-yarn install
+# Usando o Maven Wrapper (recomendado)
+./mvnw clean install
+
+# Ou usando Maven instalado
+mvn clean install
 ```
 
 ## ⚙️ Configuração
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
-
-```env
-PORT=3000
-BASE_URL=/api/v1
-FRONTEND_URL=http://localhost:3001
-BACKEND_URL=http://localhost:8080
-SECRET_KEY=sua-chave-secreta-jwt-aqui
-```
-
 ### Variáveis de Ambiente
 
-| Variável | Descrição | Exemplo |
-|----------|-----------|---------|
-| `PORT` | Porta em que o servidor irá rodar | `3000` |
-| `BASE_URL` | Prefixo base para todas as rotas da API | `/api/v1` |
-| `FRONTEND_URL` | URL do frontend para configuração de CORS | `http://localhost:3001` |
-| `BACKEND_URL` | URL do backend para onde as requisições serão roteadas | `http://localhost:8080` |
-| `SECRET_KEY` | Chave secreta para validação de tokens JWT | `sua-chave-secreta-super-segura` |
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
-⚠️ **Importante**: A `SECRET_KEY` deve ser a mesma utilizada pelo backend para gerar os tokens JWT.
+```env
+# Banco de Dados
+DB_URL=jdbc:sqlserver://localhost:1433;databaseName=dailyiu;encrypt=false;trustServerCertificate=true
+DB_USER=sa
+DB_PASSWORD=SuaSenhaSegura123!
 
-## 🏃 Como Executar
+# Azure Blob Storage (para desenvolvimento local com Azurite)
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;
+AZURE_STORAGE_CONTAINER_NAME=media
 
-### Modo Desenvolvimento
+# JWT
+JWT_SECRET=sua-chave-secreta-jwt-super-segura-aqui
 
-Para executar em modo desenvolvimento com hot-reload:
-
-```bash
-npm run dev
+# E-mail (Gmail)
+NOREPLY_EMAIL_URL=seu-email@gmail.com
+NOREPLY_EMAIL_PASSWORD=sua-senha-de-app
+SUPPORT_EMAIL_URL=suporte@dailyiu.com
 ```
 
-ou
+### Configuração do E-mail (Gmail)
+
+Para usar o Gmail como servidor SMTP:
+
+1. Ative a verificação em duas etapas na sua conta Google
+2. Gere uma "Senha de app" em: https://myaccount.google.com/apppasswords
+3. Use a senha de app gerada no campo `NOREPLY_EMAIL_PASSWORD`
+
+### Configuração do Azure Blob Storage
+
+#### Desenvolvimento Local (Azurite)
+
+O projeto já está configurado para usar Azurite (emulador local do Azure Storage) através do Docker Compose. As credenciais padrão do Azurite já estão configuradas no exemplo acima.
+
+#### Produção
+
+Para produção, substitua a `AZURE_STORAGE_CONNECTION_STRING` pela string de conexão real da sua conta Azure Storage.
+
+## ▶️ Executando o Projeto
+
+### Opção 1: Executar com Docker Compose (Recomendado)
+
+Esta opção inicia toda a infraestrutura (SQL Server, Azurite) e a aplicação:
 
 ```bash
-yarn dev
+# Iniciar todos os serviços
+docker compose -f compose-test.yaml up -d
+
+# Verificar logs
+docker compose -f compose-test.yaml logs -f backend
+
+# Parar os serviços
+docker compose -f compose-test.yaml down
 ```
 
-Este comando compila o TypeScript e inicia o servidor com watch mode, recarregando automaticamente quando houver alterações.
+A aplicação estará disponível em: `http://localhost:8080`
 
-### Modo Produção
+### Opção 2: Executar apenas a Infraestrutura com Docker Compose
 
-Para executar em modo produção:
+Execute apenas o banco de dados e o storage, e rode a aplicação localmente:
 
 ```bash
-npm start
+# Iniciar apenas SQL Server e Azurite
+docker compose up -d
+
+# Executar a aplicação localmente
+./mvnw spring-boot:run
+
+# Ou executar o JAR
+./mvnw clean package
+java -jar target/daily-iu-services-0.0.1-SNAPSHOT.jar
 ```
 
-ou
+### Opção 3: Executar Localmente (sem Docker)
+
+Se você tiver SQL Server e Azure Storage configurados localmente:
+
+1. Configure as variáveis de ambiente no seu sistema ou no arquivo `.env`
+2. Execute:
 
 ```bash
-yarn start
+./mvnw spring-boot:run
 ```
 
-Este comando compila o TypeScript e inicia o servidor.
+### Verificando se está Funcionando
+
+Após iniciar a aplicação, acesse:
+
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **API Docs (JSON)**: http://localhost:8080/v3/api-docs
+- **Health Check**: http://localhost:8080/actuator/health (se o Actuator estiver configurado)
 
 ## 📁 Estrutura do Projeto
 
 ```
-tcc-tads-gateway/
+tcc-tads-backend/
 ├── src/
-│   ├── controllers/          # Controladores que processam requisições
-│   │   ├── AdminController.ts
-│   │   ├── CalendarController.ts
-│   │   ├── ContentController.ts
-│   │   ├── UserController.ts
-│   │   └── ...
-│   ├── middlewares/          # Middlewares de validação e segurança
-│   │   ├── validateCors.ts
-│   │   ├── validateJwt.ts
-│   │   ├── validateBaseUrl.ts
-│   │   ├── rateLimiting.ts
-│   │   └── globalErrorHandler.ts
-│   ├── routes/               # Definição de rotas
-│   │   ├── adminRoutes.ts
-│   │   ├── usersRoutes.ts
-│   │   ├── contentRoutes.ts
-│   │   └── ...
-│   ├── types/                # Definições de tipos TypeScript
-│   │   ├── RoleEnum.ts
-│   │   └── UserToken.ts
-│   ├── utils/                # Utilitários
-│   │   └── getEnv.ts
-│   └── index.ts              # Ponto de entrada da aplicação
-├── dist/                     # Código compilado (gerado automaticamente)
-├── docs/                     # Documentação OpenAPI
-├── package.json
-├── tsconfig.json
-└── .env                      # Variáveis de ambiente (não versionado)
+│   ├── main/
+│   │   ├── kotlin/br/ufpr/tads/daily_iu_services/
+│   │   │   ├── adapter/
+│   │   │   │   ├── input/          # Controllers (API REST)
+│   │   │   │   │   ├── admin/      # Endpoints administrativos
+│   │   │   │   │   ├── calendar/   # Calendário e eventos
+│   │   │   │   │   ├── contact/    # Contato e suporte
+│   │   │   │   │   ├── content/    # Conteúdo da rede social
+│   │   │   │   │   ├── exercise/   # Exercícios e treinos
+│   │   │   │   │   ├── media/      # Upload de mídia
+│   │   │   │   │   ├── preferences/# Preferências do usuário
+│   │   │   │   │   ├── questions/  # Perguntas de onboarding
+│   │   │   │   │   ├── reports/    # Relatórios
+│   │   │   │   │   └── user/       # Autenticação e usuários
+│   │   │   │   └── output/         # Repositórios (JPA)
+│   │   │   ├── config/             # Configurações (CORS, Swagger)
+│   │   │   ├── domain/
+│   │   │   │   ├── entity/         # Entidades do domínio
+│   │   │   │   ├── service/        # Lógica de negócio
+│   │   │   │   └── validator/      # Validadores customizados
+│   │   │   └── exception/          # Tratamento de exceções
+│   │   └── resources/
+│   │       ├── application.yaml    # Configurações da aplicação
+│   │       └── templates/          # Templates de e-mail
+│   └── test/                       # Testes unitários e de integração
+├── compose.yaml                    # Docker Compose (infraestrutura)
+├── compose-test.yaml               # Docker Compose (infraestrutura + app)
+├── Dockerfile                      # Imagem Docker da aplicação
+├── pom.xml                         # Configuração Maven
+└── README.md                       # Este arquivo
 ```
-
-## 🔐 Autenticação e Autorização
-
-O gateway utiliza JWT (JSON Web Tokens) para autenticação. As requisições protegidas devem incluir o token no header:
-
-```
-Authorization: Bearer <token>
-```
-
-### Roles Disponíveis
-
-O sistema suporta diferentes níveis de acesso baseados em roles:
-
-- `ADMIN` - Administrador do sistema
-- `PROFESSIONAL` - Profissional de saúde
-- `USER` - Usuário comum
-
-Os middlewares de validação garantem que apenas usuários com as roles apropriadas possam acessar recursos específicos.
-
-## 📝 Scripts Disponíveis
-
-| Script | Descrição |
-|--------|-----------|
-| `npm start` | Compila o TypeScript e inicia o servidor em modo produção |
-| `npm run dev` | Compila o TypeScript e inicia o servidor em modo desenvolvimento com watch |
-| `npm test` | Executa os testes (quando implementados) |
-
-## 🔄 Fluxo de Requisição
-
-1. Cliente faz requisição para o gateway
-2. Middleware de rate limiting verifica limites
-3. Middleware de CORS valida origem
-4. Middleware de JWT valida token (se necessário)
-5. Middleware de autorização verifica permissões
-6. Controller processa a requisição
-7. Requisição é roteada para o backend (se necessário)
-8. Resposta é retornada ao cliente
-
-## 🐛 Tratamento de Erros
-
-O gateway possui um middleware global de tratamento de erros que captura e formata erros de forma consistente, retornando respostas apropriadas ao cliente.
 
 ## 📚 Documentação da API
 
-A documentação OpenAPI está disponível em `docs/openapi.json`. Você pode visualizar usando ferramentas como Swagger UI ou Postman.
+A documentação interativa da API está disponível através do Swagger UI quando a aplicação está em execução:
 
-## 🤝 Contribuindo
+**URL**: http://localhost:8080/swagger-ui.html
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+A documentação inclui:
+- Todos os endpoints disponíveis
+- Parâmetros de requisição e resposta
+- Modelos de dados (DTOs)
+- Exemplos de uso
+- Possibilidade de testar os endpoints diretamente
+
+### Principais Endpoints
+
+#### Autenticação
+- `POST /v1/users` - Criar usuário
+- `POST /v1/users/login` - Login
+- `POST /v1/users/password/forgot` - Solicitar recuperação de senha
+- `POST /v1/users/password/reset` - Redefinir senha
+
+#### Conteúdo
+- `GET /v1/content` - Listar conteúdo
+- `POST /v1/content` - Criar conteúdo
+- `PUT /v1/content/{id}` - Atualizar conteúdo
+- `DELETE /v1/content/{id}` - Deletar conteúdo
+
+#### Exercícios
+- `GET /v1/exercises` - Listar exercícios
+- `POST /v1/workout-plans` - Criar plano de treino
+- `POST /v1/workouts` - Registrar treino
+
+#### Calendário
+- `GET /v1/calendar` - Obter eventos do calendário
+- `POST /v1/calendar` - Registrar evento
+
+#### Administração
+- `GET /v1/admin/users` - Listar usuários (admin)
+- `POST /v1/admin/assign-role` - Atribuir papel (admin)
+
+## 🧪 Testes
+
+### Executar Todos os Testes
+
+```bash
+./mvnw test
+```
+
+### Executar Testes com Cobertura
+
+```bash
+./mvnw test jacoco:report
+```
+
+O relatório de cobertura será gerado em: `target/site/jacoco/index.html`
+
+### Executar Testes de Integração
+
+Os testes de integração usam H2 (banco em memória) e GreenMail (servidor SMTP mock) para não depender de serviços externos.
+
+## 💻 Desenvolvimento
+
+### Configuração do IDE
+
+Recomenda-se usar IntelliJ IDEA ou VS Code com extensões Kotlin.
+
+### Formatação de Código
+
+O projeto segue as convenções padrão do Kotlin. Certifique-se de configurar o formatter do IDE.
+
+### Estrutura de Commits
+
+Siga o padrão de commits semânticos:
+- `feat:` Nova funcionalidade
+- `fix:` Correção de bug
+- `docs:` Documentação
+- `refactor:` Refatoração
+- `test:` Testes
+- `chore:` Tarefas de manutenção
+
+### Scripts Úteis
+
+```bash
+# Limpar e compilar
+./mvnw clean compile
+
+# Executar apenas testes unitários
+./mvnw test
+
+# Gerar JAR executável
+./mvnw clean package
+
+# Verificar dependências
+./mvnw dependency:tree
+```
+
+## 👥 Desenvolvedores
+
+Este projeto foi desenvolvido como parte do Trabalho de Conclusão de Curso (TCC) do curso de Tecnologia em Análise e Desenvolvimento de Sistemas da UFPR.
+
+**Equipe:**
+- Alisson Gabriel Santos
+- Gabriel Alamartini Troni
+- Leonardo Felipe Salgado
+- Pedro Henrique Souza
+- Raul Ferreira Bana
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença especificada no arquivo `LICENSE`.
 
-## 👥 Autores
+## 🆘 Suporte
 
-- **TADS UFPR** - *Desenvolvimento inicial*
+Para dúvidas ou problemas:
+1. Consulte a documentação do Swagger UI
+2. Verifique os logs da aplicação
+3. Entre em contato com a equipe de desenvolvimento
 
-## 📞 Suporte
+---
 
-Para questões e suporte, abra uma issue no [GitHub](https://github.com/raulbana/tcc-tads-gateway/issues).
-
+**Desenvolvido com ❤️ pela equipe Daily IU**
