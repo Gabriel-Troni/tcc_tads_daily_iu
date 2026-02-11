@@ -1,0 +1,131 @@
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  profilePictureUrl?: string;
+  role?: string;
+  profile: PatientProfile;
+  preferences: Preferences;
+}
+
+export interface PatientProfile {
+  id: string;
+  birthDate: string;
+  gender: Gender;
+  q1Score: number;
+  q2Score: number;
+  q3Score: number;
+  q4Score: number;
+  iciqScore: number;
+}
+
+export interface Preferences {
+  highContrast: boolean;
+  bigFont: boolean;
+  darkMode: boolean;
+  reminderCalendar: boolean;
+  reminderCalendarSchedule?: string;
+  reminderWorkout: boolean;
+  reminderWorkoutSchedule?: string;
+  encouragingMessages: boolean;
+  workoutMediaType: WorkoutMediaType;
+}
+
+export type Gender = 'male' | 'female' | 'other';
+export type WorkoutMediaType = 'video' | 'image';
+
+export interface loginRequest {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
+
+export interface loginResponse {
+  token: string;
+  user: User;
+}
+
+export interface UserWorkoutPlanCreatorDTO {
+  planId: number;
+  startDate: string;
+  endDate?: string;
+  totalProgress: number;
+  weekProgress: number;
+  currentWeek: number;
+  completed: boolean;
+}
+
+export interface registerRequest {
+  name: string;
+  email: string;
+  password: string;
+  profile?: PatientProfileDTO;
+  workoutPlan?: UserWorkoutPlanCreatorDTO;
+}
+
+export interface PatientProfileDTO {
+  birthDate: string;
+  gender: string;
+  iciq3answer: number;
+  iciq4answer: number;
+  iciq5answer: number;
+  iciqScore: number;
+  urinationLoss: string;
+}
+
+export interface PreferencesDTO {
+  highContrast: boolean;
+  bigFont: boolean;
+  reminderCalendar: boolean;
+  reminderWorkout: boolean;
+  encouragingMessages: boolean;
+  workoutMediaType: string;
+}
+
+export interface registerResponse {
+  message: string;
+  status: string;
+}
+
+export interface forgotPasswordRequestRequest {
+  email: string;
+}
+
+export interface forgotPasswordRequestResponse {
+  message: string;
+  status: string;
+}
+
+export interface forgotPasswordValidateRequest {
+  otp: string;
+  email: string;
+  newPassword: string;
+}
+
+export interface forgotPasswordValidateResponse {
+  message: string;
+  status: string;
+}
+
+export interface updateUserRequest {
+  id: number;
+  name: string;
+  email: string;
+  profilePictureUrl?: string;
+  profile: PatientProfile;
+  preferences: Preferences;
+}
+
+export interface updateUserResponse {
+  message: string;
+  status: string;
+}
+
+export interface getUserByIdResponse {
+  id: number;
+  name: string;
+  email: string;
+  profilePictureUrl?: string;
+  profile: PatientProfile;
+  preferences: Preferences;
+}
