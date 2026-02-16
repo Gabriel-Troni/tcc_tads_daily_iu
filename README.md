@@ -42,7 +42,7 @@ As principais funcionalidades incluem:
 
 O sistema segue uma **arquitetura monolítica com API Gateway** para controle de acesso e roteamento:
 
-![Arquitetura do Sistema](./arquitetura.png)
+![Arquitetura do Sistema](./arquitetura.PNG)
 
 
 ## Funcionalidades Detalhadas
